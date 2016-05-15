@@ -1,5 +1,5 @@
 {
-  "name": "d3-chart",
+  "name": "d3-chart-dto",
   "version": "1.0.0",
   "description": "d3 chart",
   "main": "index.js",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/AusDTO/d3-chart#readme",
   "devDependencies": {
-    "d3": "^3.5.17"
+    "d3": "^3.5.17",
+    "lodash": "^4.12.0"
   }
 }
