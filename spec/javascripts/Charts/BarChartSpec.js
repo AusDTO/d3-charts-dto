@@ -1,6 +1,6 @@
 import { expect as expect } from 'chai';
 import d3 from 'd3';
-import BarChart from 'Charts/BarChart';
+import BarChart from '../../../lib/javascripts/Charts/BarChart';
 import addChartSpec from './ChartSpec.js';
 
 module.exports = function() {

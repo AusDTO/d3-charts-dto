@@ -1,6 +1,6 @@
 import { expect as expect } from 'chai';
 import d3 from 'd3';
-import Layer from 'Charts/Layer';
+import Layer from '../../../lib/javascripts/Charts/Layer';
 
 module.exports = function(callback) {
   describe(' ', () => {

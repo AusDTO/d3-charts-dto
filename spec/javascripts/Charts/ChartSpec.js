@@ -1,6 +1,6 @@
 import { expect as expect } from 'chai';
 import d3 from 'd3';
-import Chart from 'Charts/Chart';
+import Chart from '../../../lib/javascripts/Charts/Chart';
 
 module.exports = function(callback) {
   describe('Basic SVG and data ', () => {

@@ -1,5 +1,5 @@
 import { expect as expect } from 'chai';
-import normalize from 'Helpers/normalize';
+import normalize from '../../../lib/javascripts/Helpers/normalize';
 import d3 from 'd3';
 
 describe('Normalize a series to be between 0, 100', () => {

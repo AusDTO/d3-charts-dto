@@ -26,5 +26,22 @@
   "devDependencies": {
     "d3": "^3.5.17",
     "lodash": "^4.12.0"
+  },
+   "browserify": {
+    "debug": true,
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": ["es2015"],
+          "plugins": [
+              "transform-proto-to-assign",
+              ["transform-es2015-classes", {
+                "loose": true
+              }]
+            ]
+        }
+      ]
+    ]
   }
 }

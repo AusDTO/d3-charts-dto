@@ -1,5 +1,5 @@
 import { expect as expect } from 'chai';
-import getDate from 'Helpers/getDate';
+import getDate from '../../../lib/javascripts/Helpers/getDate';
 
 describe('Date object convert to standard string', () => {
   it('should return "[month name] [full year name]"', () => {

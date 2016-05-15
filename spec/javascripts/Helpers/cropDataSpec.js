@@ -1,5 +1,5 @@
 import { expect as expect } from 'chai';
-import cropData from 'Helpers/cropData';
+import cropData from '../../../lib/javascripts/Helpers/cropData';
 
 describe('Crop array', () => {
   it('should get latest 3 month out of 5 month', () => {

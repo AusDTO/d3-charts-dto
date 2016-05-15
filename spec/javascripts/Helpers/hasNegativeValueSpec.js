@@ -1,5 +1,5 @@
 import { expect as expect } from 'chai';
-import hasNegativeValue from 'Helpers/hasNegativeValue';
+import hasNegativeValue from '../../../lib/javascripts/Helpers/hasNegativeValue';
 
 describe('Check if array has value below zero', () => {
     it ('should be false if no value is below zero', () => {
