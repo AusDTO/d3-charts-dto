@@ -1,0 +1,29 @@
+{
+  "name": "d3-chart",
+  "version": "1.0.0",
+  "description": "d3 chart",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AusDTO/d3-chart.git"
+  },
+  "keywords": [
+    "d3",
+    "chart"
+  ],
+  "author": "chloe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AusDTO/d3-chart/issues"
+  },
+  "homepage": "https://github.com/AusDTO/d3-chart#readme",
+  "devDependencies": {
+    "d3": "^3.5.17"
+  }
+}
