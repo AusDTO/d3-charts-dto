@@ -45,7 +45,6 @@ module.exports = function(callback) {
     it('should have data', () => {
       let chartData = d3.select('.chart__wrapper')[0][0].__data__;
       expect(chartData.length).toEqual(data.length);
-
     });
 
     afterAll(function() {

@@ -1,34 +1,23 @@
-import { expect as expect } from 'chai';
-import d3 from 'd3';
 import Axis from '../../../lib/javascripts/Charts/Axis';
 
 module.exports = function(callback) {
   describe('Axis base', () => {
-    let data;
     let chart;
     let axis;
 
-    before(()=>{
-      if(!callback){
-        chart = {
-          svg: d3.select('#chart').append('svg')
-        }
+    beforeAll(()=>{
+      if (!callback) {
+        chart = jasmine.createSpyObj('chart', ['svg']);
+        chart.svg = jasmine.createSpyObj('svg', ['append']);
         axis = new Axis({chart: chart});
-
-      } else{
+      } else {
         chart = callback().chart;
-        data = callback().data;
         axis = callback().axis;
       }
     });
 
-    it('should create a svg group', () => {
-      this.svg.to.be.not.null;
-      console.log(this.svg);
-    });
-
-    after(function() {
-      chart.destroy();
+    it('should append group to chart svg', () => {
+      expect(chart.svg.append).toHaveBeenCalled();
     });
   });
 };
