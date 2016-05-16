@@ -23,7 +23,6 @@ module.exports = function() {
       lineChart = new LineChart(options);
       lineChart.init();
     });
-  addChartSpec(()=>({ chart: lineChart, data: data}));
 
   it('should have correct class', () => {
     expect(d3.selectAll('.line')[0][0].getAttribute('class')).toEqual('line line-0');
@@ -59,8 +58,8 @@ module.exports = function() {
     let x1 = +d3.selectAll('.ruler')[0][0].getAttribute('x1');
     let x2 = +d3.selectAll('.ruler')[0][1].getAttribute('x1');
     let x3 = +d3.selectAll('.ruler')[0][2].getAttribute('x1');
-    expect(x3).to.be.above(x2);
-    expect(x2).to.be.above(x1);
+    expect(x3).not.toBeLessThan(x2);
+    expect(x2).not.toBeLessThan(x1);
   });
 
   it('tooltip rulers should not be visible', () => {
@@ -105,6 +104,9 @@ module.exports = function() {
     });
   });
 
+  addChartSpec(()=>({ chart: lineChart, data: data}));
+
+
   afterAll(()=>{
     lineChart.destroy();
   });
@@ -136,8 +138,6 @@ describe('Multiple lineChart', () => {
 
     lineChart.init();
   });
-
-  addChartSpec(()=>({ chart: lineChart, data: data}));
 
   it('should have correct class', () => {
     expect(d3.selectAll('.line')[0][0].getAttribute('class')).toEqual('line line-0');
@@ -206,8 +206,10 @@ describe('Multiple lineChart', () => {
       }
     });
   });
+
+  addChartSpec(()=>({ chart: lineChart, data: data}));
   afterAll(()=>{
     lineChart.destroy();
   });
-});
+ });
 }

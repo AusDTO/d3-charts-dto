@@ -1,4 +1,3 @@
-import { expect as expect } from 'chai';
 import d3 from 'd3';
 import StackBarChart from '../../../lib/javascripts/Charts/StackBarChart';
 import addChartSpec from './ChartSpec.js';
@@ -9,7 +8,7 @@ module.exports = function() {
     let options;
     let barChart;
 
-    before(()=>{
+    beforeAll(()=>{
       data = [
         [ {'x': new Date('2016-01'), 'y': 29.39, id: 0},
           {'x': new Date('2016-02'), 'y': null, id: 0},
@@ -27,15 +26,13 @@ module.exports = function() {
       barChart.init();
     });
 
-    addChartSpec(()=>({ chart: barChart, data: data}));
-
     it('should have correct class', () => {
-      expect(d3.select('.bar-group').attr('class')).to.be.equal('bar-group bar-group-0');
+      expect(d3.select('.bar-group').attr('class')).toEqual('bar-group bar-group-0');
     });
 
     it('should create rectangles', () => {
-      expect(d3.selectAll('rect').node()).to.not.be.null;
-      expect(d3.selectAll('rect')[0].length).to.be.equal(data[0].length);
+      expect(d3.selectAll('rect').node()).not.toBe(null);
+      expect(d3.selectAll('rect')[0].length).toEqual(data[0].length);
     });
 
     it('rects should have correct height and width', () => {
@@ -43,14 +40,15 @@ module.exports = function() {
       let wFloor = Math.floor(window.testChartWidth / (data[0].length + data[0].length + 1));
 
       for (let i = 0; i < data[0].length; i ++) {
-        expect(parseInt(d3.selectAll('rect')[0][i].getAttribute('width'))).to.be.equal(wCeil||wFloor);
+        expect(parseInt(d3.selectAll('rect')[0][i].getAttribute('width'))).toEqual(wCeil||wFloor);
       }
-      expect(parseInt(d3.selectAll('rect')[0][0].getAttribute('height'))).to.be.equal(294);
-      expect(parseInt(d3.selectAll('rect')[0][1].getAttribute('height'))).to.be.equal(0);
-      expect(parseInt(d3.selectAll('rect')[0][2].getAttribute('height'))).to.be.equal(0);
+      expect(parseInt(d3.selectAll('rect')[0][0].getAttribute('height'))).toEqual(294);
+      expect(parseInt(d3.selectAll('rect')[0][1].getAttribute('height'))).toEqual(0);
+      expect(parseInt(d3.selectAll('rect')[0][2].getAttribute('height'))).toEqual(0);
     });
 
-    after(()=>{
+    addChartSpec(()=>({ chart: barChart, data: data}));
+    afterAll(()=>{
       barChart.destroy();
     });
   });
@@ -60,7 +58,7 @@ module.exports = function() {
     let options;
     let barChart;
 
-    before(()=>{
+    beforeAll(()=>{
       data = [
         [ {'x': new Date('2016-01'), 'y': 29.39, id: 0},
           {'x': new Date('2016-02'), 'y': null, id: 0},
@@ -81,35 +79,34 @@ module.exports = function() {
       barChart.init();
     });
 
-    addChartSpec(()=>({ chart: barChart, data: data}));
-
     it('should have correct class', () => {
-      expect(d3.selectAll('.bar-group')[0][0].getAttribute('class')).to.be.equal('bar-group bar-group-0');
-      expect(d3.selectAll('.bar-group')[0][1].getAttribute('class')).to.be.equal('bar-group bar-group-1');
+      expect(d3.selectAll('.bar-group')[0][0].getAttribute('class')).toEqual('bar-group bar-group-0');
+      expect(d3.selectAll('.bar-group')[0][1].getAttribute('class')).toEqual('bar-group bar-group-1');
     });
 
     it('should create rectangles', () => {
-      expect(d3.selectAll('rect').node()).to.not.be.null;
-      expect(d3.selectAll('rect')[0].length).to.be.equal(data[0].length * 2);
+      expect(d3.selectAll('rect').node()).not.toBe(null);
+      expect(d3.selectAll('rect')[0].length).toEqual(data[0].length * 2);
     });
 
     it('rects should have correct height and width for each rect', () => {
       let wCeil = Math.ceil(window.testChartWidth / (data[0].length + data[0].length + 1));
       let wFloor = Math.floor(window.testChartWidth / (data[0].length + data[0].length + 1));
       for (let i = 0; i < data[0].length * 2; i ++) {
-        expect(parseInt(d3.selectAll('rect')[0][i].getAttribute('width'))).to.be.equal(wCeil || wFloor);
+        expect(parseInt(d3.selectAll('rect')[0][i].getAttribute('width'))).toEqual(wCeil || wFloor);
       }
-      expect(parseInt(d3.selectAll('.bar-group-0 rect')[0][0].getAttribute('height'))).to.be.equal(147);
-      expect(parseInt(d3.selectAll('.bar-group-0 rect')[0][1].getAttribute('height'))).to.be.equal(0);
-      expect(parseInt(d3.selectAll('.bar-group-0 rect')[0][2].getAttribute('height'))).to.be.equal(0);
+      expect(parseInt(d3.selectAll('.bar-group-0 rect')[0][0].getAttribute('height'))).toEqual(147);
+      expect(parseInt(d3.selectAll('.bar-group-0 rect')[0][1].getAttribute('height'))).toEqual(0);
+      expect(parseInt(d3.selectAll('.bar-group-0 rect')[0][2].getAttribute('height'))).toEqual(0);
 
 
-      expect(parseInt(d3.selectAll('.bar-group-1 rect')[0][0].getAttribute('height'))).to.be.equal(147);
-      expect(parseInt(d3.selectAll('.bar-group-1 rect')[0][1].getAttribute('height'))).to.be.equal(50);
-      expect(parseInt(d3.selectAll('.bar-group-1 rect')[0][2].getAttribute('height'))).to.be.equal(50);
+      expect(parseInt(d3.selectAll('.bar-group-1 rect')[0][0].getAttribute('height'))).toEqual(147);
+      expect(parseInt(d3.selectAll('.bar-group-1 rect')[0][1].getAttribute('height'))).toEqual(50);
+      expect(parseInt(d3.selectAll('.bar-group-1 rect')[0][2].getAttribute('height'))).toEqual(50);
     });
 
-    after(()=>{
+    addChartSpec(()=>({ chart: barChart, data: data}));
+    afterAll(()=>{
       barChart.destroy();
     });
   });

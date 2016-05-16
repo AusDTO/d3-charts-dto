@@ -1,4 +1,3 @@
-import { expect as expect } from 'chai';
 import d3 from 'd3';
 import BarChart from '../../../lib/javascripts/Charts/BarChart';
 import addChartSpec from './ChartSpec.js';
@@ -9,7 +8,7 @@ module.exports = function() {
     let options;
     let barChart;
 
-    before(()=>{
+    beforeAll(()=>{
       data = [
         [ {'x': new Date('2016-01'), 'y': 29.39, id: 0},
           {'x': new Date('2016-02'), 'y': null, id: 0},
@@ -29,26 +28,24 @@ module.exports = function() {
       barChart = new BarChart(options);
       barChart.init();
     });
-
-    addChartSpec(()=>({ chart: barChart, data: data}));
-
     it('should create rectangles', () => {
-      expect(d3.selectAll('rect').node()).to.not.be.null;
-      expect(d3.selectAll('rect')[0].length).to.be.equal(data[1].length + data[0].length);
+      expect(d3.selectAll('rect').node()).not.toBe(null);
+      expect(d3.selectAll('rect')[0].length).toEqual(data[1].length + data[0].length);
     });
 
     it('rects should not have height or width', () => {
-      expect(d3.selectAll('rect').attr('width')).to.be.null;
-      expect(d3.selectAll('rect').attr('height')).to.be.null;
+      expect(d3.selectAll('rect').attr('width')).toBe(null);
+      expect(d3.selectAll('rect').attr('height')).toBe(null);
     });
 
     it('rects should have correct class', () => {
-      d3.selectAll('rect').each(function(){
-        expect(d3.select(this).attr('class')).to.be.equal('bar');
+      d3.selectAll('rect').each(function() {
+        expect(d3.select(this).attr('class')).toEqual('bar');
       });
-
     });
-    after(()=>{
+
+    addChartSpec(()=>({ chart: barChart, data: data}));
+    afterAll(()=>{
       barChart.destroy();
     });
   });
