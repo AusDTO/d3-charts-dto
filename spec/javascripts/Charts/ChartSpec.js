@@ -1,4 +1,3 @@
-import { expect as expect } from 'chai';
 import d3 from 'd3';
 import Chart from '../../../lib/javascripts/Charts/Chart';
 
@@ -8,7 +7,7 @@ module.exports = function(callback) {
     let options;
     let chart;
 
-    before(()=>{
+    beforeAll(()=>{
       if(!callback) {
         data = [[{'x': new Date('2016-01'), 'y': 40},
                 {'x': new Date('2016-02'), 'y': null},
@@ -31,25 +30,25 @@ module.exports = function(callback) {
     });
 
     it('should create an chart object', () => {
-      expect(chart).to.be.an('object');
+      expect(chart).toEqual(jasmine.any(Object));
     });
 
     it('should create an svg of correct size', () => {
-      expect(d3.select('svg').style('width')).to.equal(window.testChartWidth + 'px');
-      expect(d3.select('svg').style('height')).to.equal('300px');
+      expect(d3.select('svg').style('width')).toEqual(window.testChartWidth + 'px');
+      expect(d3.select('svg').style('height')).toEqual('300px');
     });
 
     it('should create group of corect class', () => {
-      expect(d3.select('g').attr('class')).to.equal('chart__wrapper');
+      expect(d3.select('g').attr('class')).toEqual('chart__wrapper');
     });
 
     it('should have data', () => {
       let chartData = d3.select('.chart__wrapper')[0][0].__data__;
-      expect(chartData.length).to.equal(data.length);
+      expect(chartData.length).toEqual(data.length);
 
     });
 
-    after(function() {
+    afterAll(function() {
       chart.destroy();
     });
   });

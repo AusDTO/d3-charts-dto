@@ -1,4 +1,3 @@
-import { expect as expect } from 'chai';
 import cropData from '../../../lib/javascripts/Helpers/cropData';
 
 describe('Crop array', () => {
@@ -10,9 +9,9 @@ describe('Crop array', () => {
       {'label': '2016-04', 'value': 4},
       {'label': '2016-05', 'value': 5}
     ];
-    expect(cropData(array, 3).length).to.equal(3);
-    expect(cropData(array, 3)[0].value).to.equal(3);
-    expect(cropData(array, 3)[2].value).to.equal(5);
+    expect(cropData(array, 3).length).toEqual(3);
+    expect(cropData(array, 3)[0].value).toEqual(3);
+    expect(cropData(array, 3)[2].value).toEqual(5);
   });
 
   it('should not crop if only 3 months are provided', () => {
@@ -21,8 +20,8 @@ describe('Crop array', () => {
       {'label': '2016-02', 'value': 2},
       {'label': '2016-03', 'value': 3}
     ];
-    expect(cropData(array, 3)[0].value).to.equal(1);
-    expect(cropData(array, 3)[2].value).to.equal(3);
-    expect(cropData(array, 3).length).to.equal(3);
+    expect(cropData(array, 3)[0].value).toEqual(1);
+    expect(cropData(array, 3)[2].value).toEqual(3);
+    expect(cropData(array, 3).length).toEqual(3);
   });
 });

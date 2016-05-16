@@ -1,4 +1,3 @@
-import { expect as expect } from 'chai';
 import hasNegativeValue from '../../../lib/javascripts/Helpers/hasNegativeValue';
 
 describe('Check if array has value below zero', () => {
@@ -8,7 +7,7 @@ describe('Check if array has value below zero', () => {
           {'x': '2016-02', 'y': null},
           {'x': '2016-03', 'y': 0}
         ];
-        expect(hasNegativeValue([series, series])).to.be.false;
+        expect(hasNegativeValue([series, series])).toBe(false);
     });
 
     it ('should be true if no value is below zero', () => {
@@ -17,6 +16,6 @@ describe('Check if array has value below zero', () => {
           {'x': '2016-02', 'y': -1},
           {'x': '2016-03', 'y': 25.09}
         ];
-        expect(hasNegativeValue([series, series])).to.be.true;
+        expect(hasNegativeValue([series, series])).toBe(true);
     });
 });
