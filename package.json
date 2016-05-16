@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AusDTO/d3-chart.git"
+    "url": "git+https://github.com/AusDTO/d3-charts-dto.git"
   },
   "keywords": [
     "d3",
