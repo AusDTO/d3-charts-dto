@@ -1,4 +1,3 @@
-import { expect as expect } from 'chai';
 import d3 from 'd3';
 import LineChart from '../../../lib/javascripts/Charts/LineChart';
 import addChartSpec from './ChartSpec.js';
@@ -9,7 +8,7 @@ module.exports = function() {
     let options;
     let lineChart;
 
-    before(()=>{
+    beforeAll(()=>{
       data = [[ {'x': new Date('2016-01'), 'y': 29.39, id: 0, index: 0},
                 {'x': new Date('2016-02'), 'y': null, id: 0, index: 0},
                 {'x': new Date('2016-03'), 'y': 0, id: 0, index: 0}]];
@@ -27,35 +26,35 @@ module.exports = function() {
   addChartSpec(()=>({ chart: lineChart, data: data}));
 
   it('should have correct class', () => {
-    expect(d3.selectAll('.line')[0][0].getAttribute('class')).to.be.equal('line line-0');
+    expect(d3.selectAll('.line')[0][0].getAttribute('class')).toEqual('line line-0');
   });
 
   it('should append one path', () => {
-    expect(d3.selectAll('path').node()).to.not.be.null;
-    expect(d3.selectAll('path')[0].length).to.be.equal(1);
+    expect(d3.selectAll('path').node()).not.toBe(null);
+    expect(d3.selectAll('path')[0].length).toEqual(1);
   });
 
   it('should append tooltip circles', () => {
-    expect(d3.selectAll('circle').node()).to.not.be.null;
-    expect(d3.selectAll('circle')[0].length).to.be.equal(3);
+    expect(d3.selectAll('circle').node()).not.toBe(null);
+    expect(d3.selectAll('circle')[0].length).toEqual(3);
   });
 
   it('tooltip circle should have correct size', () => {
     d3.selectAll('circle').each(function() {
-      expect(d3.select(this).attr('r')).to.be.equal('0');
+      expect(d3.select(this).attr('r')).toEqual('0');
     });
   });
 
   it('should append tooltip rulers', () => {
-    expect(d3.selectAll('.ruler').node()).to.not.be.null;
-    expect(d3.selectAll('.ruler')[0].length).to.be.equal(3);
+    expect(d3.selectAll('.ruler').node()).not.toBe(null);
+    expect(d3.selectAll('.ruler')[0].length).toEqual(3);
   });
 
   it('tooltip rulers should have correct position', () => {
     d3.selectAll('.ruler').each(function(d, i) {
-      expect(d3.select(this).attr('y1')).to.be.equal('0');
-      expect(d3.select(this).attr('y2')).to.be.equal('300');
-      expect(d3.select(this).attr('x1')).to.be.equal(d3.select(this).attr('x2'));
+      expect(d3.select(this).attr('y1')).toEqual('0');
+      expect(d3.select(this).attr('y2')).toEqual('300');
+      expect(d3.select(this).attr('x1')).toEqual(d3.select(this).attr('x2'));
     });
     let x1 = +d3.selectAll('.ruler')[0][0].getAttribute('x1');
     let x2 = +d3.selectAll('.ruler')[0][1].getAttribute('x1');
@@ -66,31 +65,31 @@ module.exports = function() {
 
   it('tooltip rulers should not be visible', () => {
     d3.selectAll('.ruler').each(function() {
-      expect(d3.select(this).attr('stroke-width')).to.be.equal('0');
+      expect(d3.select(this).attr('stroke-width')).toEqual('0');
     });
   });
 
   it('path should not be empty', () => {
-    expect(d3.selectAll('path').attr('d')).to.not.be.null;
+    expect(d3.selectAll('path').attr('d')).not.toBe(null);
   });
 
   it('should have break for null data', () => {
     let line = d3.select('.line-0');
     let pathArray = line.attr('d').split('');
     let filtered = pathArray.filter(d=> d === 'M');
-    expect(filtered.length).to.be.equal(2);
+    expect(filtered.length).toEqual(2);
   });
 
   it('circles should indicate hover', ()=>{
     lineChart.hover(0);
     d3.selectAll('circle').each(function(d, i) {
       if (i === 0) {
-        expect(d3.select(this).attr('stroke-width')).to.be.equal('1');
-        expect(d3.select(this).attr('fill')).to.be.equal('#ffffff');
-        expect(d3.select(this).attr('r')).to.be.equal('3');
+        expect(d3.select(this).attr('stroke-width')).toEqual('1');
+        expect(d3.select(this).attr('fill')).toEqual('#ffffff');
+        expect(d3.select(this).attr('r')).toEqual('3');
       } else {
-        expect(d3.select(this).attr('stroke-width')).to.be.equal('0');
-        expect(d3.select(this).attr('r')).to.be.equal('0');
+        expect(d3.select(this).attr('stroke-width')).toEqual('0');
+        expect(d3.select(this).attr('r')).toEqual('0');
       }
     });
   });
@@ -99,14 +98,14 @@ module.exports = function() {
     lineChart.hover(0);
     d3.selectAll('.ruler').each(function(d, i ) {
       if(i === 0){
-        expect(d3.select(this).attr('stroke-width')).to.be.equal('1');
+        expect(d3.select(this).attr('stroke-width')).toEqual('1');
       } else {
-        expect(d3.select(this).attr('stroke-width')).to.be.equal('0');
+        expect(d3.select(this).attr('stroke-width')).toEqual('0');
       }
     });
   });
 
-  after(()=>{
+  afterAll(()=>{
     lineChart.destroy();
   });
 });
@@ -116,7 +115,7 @@ describe('Multiple lineChart', () => {
   let options;
   let lineChart;
 
-  before(()=>{
+  beforeAll(()=>{
     data = [
       [{'x': new Date('2016-01'), 'y': 29.39, id: 0, index: 0},
        {'x': new Date('2016-02'), 'y': null, id: 0, index: 0},
@@ -141,58 +140,58 @@ describe('Multiple lineChart', () => {
   addChartSpec(()=>({ chart: lineChart, data: data}));
 
   it('should have correct class', () => {
-    expect(d3.selectAll('.line')[0][0].getAttribute('class')).to.be.equal('line line-0');
-    expect(d3.selectAll('.line')[0][1].getAttribute('class')).to.be.equal('line line-1');
+    expect(d3.selectAll('.line')[0][0].getAttribute('class')).toEqual('line line-0');
+    expect(d3.selectAll('.line')[0][1].getAttribute('class')).toEqual('line line-1');
   });
 
   it('should append two path', () => {
-    expect(d3.selectAll('path').node()).to.not.be.null;
-    expect(d3.selectAll('path')[0].length).to.be.equal(2);
+    expect(d3.selectAll('path').node()).not.toBe(null);
+    expect(d3.selectAll('path')[0].length).toEqual(2);
   });
 
   it('should append tooltip circles', () => {
-    expect(d3.selectAll('circle').node()).to.not.be.null;
-    expect(d3.selectAll('circle')[0].length).to.be.equal(6);
+    expect(d3.selectAll('circle').node()).not.toBe(null);
+    expect(d3.selectAll('circle')[0].length).toEqual(6);
   });
 
   it('should append tooltip rulers', () => {
-    expect(d3.selectAll('.ruler').node()).to.not.be.null;
-    expect(d3.selectAll('.ruler')[0].length).to.be.equal(3);
+    expect(d3.selectAll('.ruler').node()).not.toBe(null);
+    expect(d3.selectAll('.ruler')[0].length).toEqual(3);
   });
 
   it('tooltip rulers should have correct position', () => {
     d3.selectAll('.ruler').each(function(d, i) {
-      expect(d3.select(this).attr('y1')).to.be.equal('0');
-      expect(d3.select(this).attr('y2')).to.be.equal('300');
+      expect(d3.select(this).attr('y1')).toEqual('0');
+      expect(d3.select(this).attr('y2')).toEqual('300');
     });
   });
 
   it('tooltip rulers should not be visible', () => {
     d3.selectAll('.ruler').each(function() {
-      expect(d3.select(this).attr('stroke-width')).to.be.equal('0');
+      expect(d3.select(this).attr('stroke-width')).toEqual('0');
     });
   });
 
 
   it('path should not be empty', () => {
-    expect(d3.selectAll('path').attr('d')).to.not.be.null;
+    expect(d3.selectAll('path').attr('d')).not.toBe(null);
   });
 
   it('should have break for null data', () => {
     let line = d3.select('.line-0');
     let pathArray = line.attr('d').split('');
     let filtered = pathArray.filter(d=> d === 'M');
-    expect(filtered.length).to.be.equal(2)
+    expect(filtered.length).toEqual(2)
   });
 
     it('circles should indicate hover', ()=>{
     lineChart.hover(0);
     d3.selectAll('circle').each(function(d, i) {
       if (i === 0 || i === 3) {
-        expect(d3.select(this).attr('stroke-width')).to.be.equal('1');
-        expect(d3.select(this).attr('fill')).to.be.equal('#ffffff');
+        expect(d3.select(this).attr('stroke-width')).toEqual('1');
+        expect(d3.select(this).attr('fill')).toEqual('#ffffff');
       } else {
-        expect(d3.select(this).attr('stroke-width')).to.be.equal('0');
+        expect(d3.select(this).attr('stroke-width')).toEqual('0');
       }
     });
   });
@@ -201,13 +200,13 @@ describe('Multiple lineChart', () => {
     lineChart.hover(0);
     d3.selectAll('.ruler').each(function(d, i ) {
       if(i === 0 || i === 3){
-        expect(d3.select(this).attr('stroke-width')).to.be.equal('1');
+        expect(d3.select(this).attr('stroke-width')).toEqual('1');
       } else {
-        expect(d3.select(this).attr('stroke-width')).to.be.equal('0');
+        expect(d3.select(this).attr('stroke-width')).toEqual('0');
       }
     });
   });
-  after(()=>{
+  afterAll(()=>{
     lineChart.destroy();
   });
 });
