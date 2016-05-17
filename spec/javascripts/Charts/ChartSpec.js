@@ -8,7 +8,7 @@ module.exports = function(callback) {
     let chart;
 
     beforeAll(()=>{
-      if(!callback) {
+      if (!callback) {
         data = [[{'x': new Date('2016-01'), 'y': 40},
                 {'x': new Date('2016-02'), 'y': null},
                 {'x': new Date('2016-03'), 'y': 0}]];

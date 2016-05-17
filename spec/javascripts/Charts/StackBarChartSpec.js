@@ -23,7 +23,12 @@ module.exports = function() {
       };
 
       barChart = new StackBarChart(options);
+      spyOn(barChart,'render').and.callThrough();
       barChart.init();
+    });
+
+    it('should call render', ()=>{
+       expect(barChart.render).toHaveBeenCalled();
     });
 
     it('should have correct class', () => {
