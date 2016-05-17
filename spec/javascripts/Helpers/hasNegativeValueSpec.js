@@ -1,5 +1,5 @@
 import hasNegativeValue from '../../../lib/javascripts/Helpers/hasNegativeValue';
-
+// Currently not used
 module.exports = function() {
   describe('Check if array has value below zero', () => {
     it('should be false if no value is below zero', () => {
