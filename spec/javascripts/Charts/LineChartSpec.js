@@ -83,23 +83,20 @@ module.exports = function() {
     lineChart.hover(0);
     d3.selectAll('circle').each(function(d, i) {
       if (i === 0) {
-        expect(d3.select(this).attr('stroke-width')).toEqual('1');
-        expect(d3.select(this).attr('fill')).toEqual('#ffffff');
-        expect(d3.select(this).attr('r')).toEqual('3');
+        expect(d3.select(this).classed('is-hover')).toEqual(true);
       } else {
-        expect(d3.select(this).attr('stroke-width')).toEqual('0');
-        expect(d3.select(this).attr('r')).toEqual('0');
+        expect(d3.select(this).classed('is-hover')).toEqual(false);
       }
     });
   });
 
   it('tooltip rulers should be visible on hover', () => {
     lineChart.hover(0);
-    d3.selectAll('.ruler').each(function(d, i ) {
+    d3.selectAll('.ruler-wrapper').each(function(d, i ) {
       if(i === 0){
-        expect(d3.select(this).attr('stroke-width')).toEqual('1');
+        expect(d3.select(this).classed('is-hover')).toEqual(true);
       } else {
-        expect(d3.select(this).attr('stroke-width')).toEqual('0');
+        expect(d3.select(this).classed('is-hover')).toEqual(false);
       }
     });
   });
@@ -184,28 +181,6 @@ describe('Multiple lineChart', () => {
     expect(filtered.length).toEqual(2)
   });
 
-    it('circles should indicate hover', ()=>{
-    lineChart.hover(0);
-    d3.selectAll('circle').each(function(d, i) {
-      if (i === 0 || i === 3) {
-        expect(d3.select(this).attr('stroke-width')).toEqual('1');
-        expect(d3.select(this).attr('fill')).toEqual('#ffffff');
-      } else {
-        expect(d3.select(this).attr('stroke-width')).toEqual('0');
-      }
-    });
-  });
-
-  it('tooltip rulers should be visible on hover', () => {
-    lineChart.hover(0);
-    d3.selectAll('.ruler').each(function(d, i ) {
-      if(i === 0 || i === 3){
-        expect(d3.select(this).attr('stroke-width')).toEqual('1');
-      } else {
-        expect(d3.select(this).attr('stroke-width')).toEqual('0');
-      }
-    });
-  });
 
   addChartSpec(()=>({ chart: lineChart, data: data}));
   afterAll(()=>{
