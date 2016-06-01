@@ -40,7 +40,7 @@ module.exports = function() {
 
   it('tooltip circle should have correct size', () => {
     d3.selectAll('circle').each(function() {
-      expect(d3.select(this).attr('r')).toEqual('0');
+      expect(d3.select(this).attr('r')).toEqual('3');
     });
   });
 
