@@ -33,6 +33,11 @@ let lSingle = new LineChart({
     data: data0
 });
 lSingle.init();
+let lSingleXAxis = new XAxis({chart: lSingle});
+let lSingleYAxis = new YAxis({chart: lSingle});
+let lSingleLegend = new Legend({chart: lSingle});
+let lSingleoverlay = new OverlayLayer({chart: lSingle, legend: lSingleLegend, above: true});
+
         </pre>
         </div>
         <div class="col-sm-8"><div id="chart0" class="single-line"></div></div>
