@@ -4,7 +4,7 @@ d3 charts for dashboard
 D3-charts-dto is a D3-based reusable chart library that enables data visualisation. It is designed originally for the [Goverenment Performance Dashboard](https://dashboard.gov.au/).
 
 ## Tutorials and examples
-Getting started
+[Getting started](https://github.com/AusDTO/d3-charts-dto/wiki)
 
 [Examples](http://ausdto.github.io/d3-charts-dto/)
 
