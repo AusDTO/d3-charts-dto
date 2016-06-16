@@ -8,14 +8,7 @@ const notify = require('gulp-notify');
 const source = require('vinyl-source-stream');
 const transform = require('vinyl-transform');
 const watchify = require('watchify');
-const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourcemaps');
-const uglify = require('gulp-uglify');
 const jsdoc = require('gulp-jsdoc3');
-
-const sassGlob = ['./lib/sass/*.scss',
-                './lib/sass/**/*.scss',
-                './lib/sass/**/**/*.scss'];
 
 const jsSource = {
     dev: {
@@ -41,20 +34,6 @@ function handleErrors() {
     this.emit('end'); // Keep gulp from hanging on this task
 }
 
-
-
-gulp.task('sass', function () {
-  return gulp.src(sassGlob[0])
-    .pipe(sourcemaps.init())
-    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest('./public/assets/css'));
-});
-
-gulp.task('watch-sass', function () {
-  gulp.watch(sassGlob, ['sass']);
-});
-
 gulp.task('dev', function dev() {
     return build(jsSource.dev, false);
 });
@@ -72,14 +51,14 @@ gulp.task('watch-test', function watchTest() {
 });
 
 
-gulp.task('watch', ['watch-dev', 'watch-test', 'watch-sass']);
+gulp.task('watch', ['watch-dev', 'watch-test']);
 
 gulp.task('build', ['dev', 'test', 'sass']);
 
 gulp.task('default', ['build']);
 
 gulp.task('doc', function (cb) {
-    gulp.src(['README.md', './lib/javascripts/**/*.js'], {read: false})
+    gulp.src(['README.md', 'node_modules/d3-charts-dto/lib/javascripts/**/*.js'], {read: false})
         .pipe(jsdoc(cb));
 });
 
@@ -92,11 +71,6 @@ function bundle(env, bundler, minify, catchErrors) {
     result = result
         .pipe(source(env.build))
         .pipe(buffer());
-    if (minify) {
-        result = result
-            .pipe(uglify({preserveComments: 'some', mangle: true, compress: true}));
-    }
-
     result = result
         // Extract the embedded source map to a separate file.
         .pipe(transform(function() { return exorcist(env.dest + '/' + env.build + '.map'); }))

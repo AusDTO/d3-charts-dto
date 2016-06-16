@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3 Charts DTO Examples</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+<div class="patterns">
+    <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <pattern id="diagonal-stripe-1" patternUnits="userSpaceOnUse" width="10" height="10"> <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScvPgogIDxwYXRoIGQ9J00tMSwxIGwyLC0yCiAgICAgICAgICAgTTAsMTAgbDEwLC0xMAogICAgICAgICAgIE05LDExIGwyLC0yJyBzdHJva2U9J2JsYWNrJyBzdHJva2Utd2lkdGg9JzEnLz4KPC9zdmc+Cg==" x="0" y="0" width="10" height="10"> </image> </pattern> </defs> </svg>
+</div>
+<header class="container">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <h1>D3-charts-dto examples and demo</h1>
+    </div>
+  </div>
+</nav></header>
+<div class="container ">
+<h2>Bare Charts</h2>
+    <section class="row">
+        <div class="col-sm-12"><h3> Single Line chart</h3></div>
+        <div class="col-sm-4">
+        <pre>
+let lSingle = new LineChart({
+    height: 200,
+    element: d3.select('#chart0'),
+    type: 'line',
+    data: data0
+});
+lSingle.init();
+        </pre>
+        </div>
+        <div class="col-sm-8"><div id="chart0" class="single-line"></div></div>
+    </section>
+
+<section class="row">
+        <div class="col-sm-12"><h3> Multiple Line chart</h3></div>
+        <div class="col-sm-4">
+        <pre>
+let lMulti = new LineChart({
+    height: 200,
+    element: d3.select('#chart0'),
+    type: 'line',
+    data: data1
+});
+lMulti.init();
+        </pre>
+        </div>
+        <div class="col-sm-8"><div id="chart1" class="multi-line"></div></div>
+</section>
+
+<section class="row">
+        <div class="col-sm-12"><h3> Single Bar chart</h3></div>
+        <div class="col-sm-4">
+        <pre>
+let bSingle = new StackBarChart({
+    height: 200,
+    element: d3.select('#chart0'),
+    type: 'bar',
+    data: data2
+});
+bSingle.init();
+        </pre>
+        </div>
+        <div class="col-sm-8"><div id="chart2" class="single-bar"></div></div>
+</section>
+
+<section class="row">
+        <div class="col-sm-12"><h3> Multi Bar chart</h3></div>
+        <div class="col-sm-4">
+        <pre>
+let bMulti = new StackBarChart({
+    height: 200,
+    element: d3.select('#chart3'),
+    type: 'bar',
+    data: data1
+});
+bMulti.init();
+        </pre>
+        </div>
+        <div class="col-sm-8"><div id="chart3" class="multi-bar"></div></div>
+</section>
+
+<section class="row">
+        <div class="col-sm-12"><h3> Pie chart</h3></div>
+        <div class="col-sm-4">
+        <pre>
+let pie = new PieChart({
+    height: 200,
+    element: d3.select('#chart4'),
+    type: 'pie',
+    data: dataPie
+});
+pie.init();
+        </pre>
+        </div>
+        <div class="col-sm-8"><div id="chart4" class="pie "></div></div>
+</section>
+
+<h2>Charts with Axis</h2>
+
+
+<h2>Charts with interactions</h2>
+
+
+</div>
+
+<script src="./public/assets/javascripts/index.js"></script>
+</body>
+</html>
