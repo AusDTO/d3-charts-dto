@@ -1,13 +1,13 @@
 import d3 from 'd3';
-//import Legend from './lib/javascripts/Charts/Legend.js';
+import Legend from './lib/javascripts/Charts/Legend.js';
 import LineChart from './lib/javascripts/Charts/LineChart.js';
 import StackBarChart from './lib/javascripts/Charts/StackBarChart.js';
 import PieChart from './lib/javascripts/Charts/PieChart.js';
 
 // import NullDataLayer from './lib/javascripts/Charts/NullDataLayer.js';
-// import OverlayLayer from './lib/javascripts/Charts/OverlayLayer.js';
-// import XAxis from './lib/javascripts/Charts/XAxis';
-// import YAxis from './lib/javascripts/Charts/YAxis';
+import OverlayLayer from './lib/javascripts/Charts/OverlayLayer.js';
+import XAxis from './lib/javascripts/Charts/XAxis';
+import YAxis from './lib/javascripts/Charts/YAxis';
 
 function createPoint(day, color){
   return {altColor:d3.rgb(color).darker(0.85), 
@@ -70,6 +70,11 @@ let pie = new PieChart({
 
 
 lSingle.init();
+let lSingleXAxis = new XAxis({chart: lSingle});
+let lSingleYAxis = new YAxis({chart: lSingle});
+let lSingleLegend = new Legend({chart: lSingle});
+let lSingleoverlay = new OverlayLayer({chart: lSingle, legend: lSingleLegend, above: true});
+
 lMulti.init();
 bSingle.init();
 bMulti.init();
