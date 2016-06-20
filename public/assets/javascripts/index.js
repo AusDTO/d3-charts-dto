@@ -21,6 +21,10 @@ var _PieChart = require('./lib/javascripts/Charts/PieChart.js');
 
 var _PieChart2 = _interopRequireDefault(_PieChart);
 
+var _NullDataLayer = require('./lib/javascripts/Charts/NullDataLayer.js');
+
+var _NullDataLayer2 = _interopRequireDefault(_NullDataLayer);
+
 var _OverlayLayer = require('./lib/javascripts/Charts/OverlayLayer.js');
 
 var _OverlayLayer2 = _interopRequireDefault(_OverlayLayer);
@@ -47,8 +51,6 @@ function createPoint(day, color) {
         y: Math.random() * 100
     };
 }
-
-// import NullDataLayer from './lib/javascripts/Charts/NullDataLayer.js';
 
 function createDataset(size, color) {
     var dataset = [];
@@ -103,12 +105,32 @@ var lSingleYAxis = new _YAxis2.default({ chart: lSingle });
 var lSingleLegend = new _Legend2.default({ chart: lSingle });
 var lSingleoverlay = new _OverlayLayer2.default({ chart: lSingle, legend: lSingleLegend, above: true });
 
+var dataMissing = [createDataset(30, '#c0392b'), createDataset(30, '#1abc9c')];
+dataMissing[0][4].y = null;
+dataMissing[0][5].y = null;
+dataMissing[0][6].y = null;
+
+console.log(dataMissing);
+
+var lSingleWithMissingData = new _LineChart2.default({
+    height: 200,
+    element: _d2.default.select('#chart5'),
+    type: 'line',
+    data: dataMissing
+});
+lSingleWithMissingData.init();
+var lSingleWithMissingDataXAxis = new _XAxis2.default({ chart: lSingleWithMissingData });
+var lSingleWithMissingDataYAxis = new _YAxis2.default({ chart: lSingleWithMissingData });
+var lSingleWithMissingDataLegend = new _Legend2.default({ chart: lSingleWithMissingData });
+var lSingleWithMissingDataOverlay = new _OverlayLayer2.default({ chart: lSingleWithMissingData, legend: lSingleWithMissingDataLegend, above: true });
+var lSingleWithMissingDataNullDataLayer = new _NullDataLayer2.default({ chart: lSingleWithMissingData, legend: lSingleWithMissingDataLegend, above: false });
+
 lMulti.init();
 bSingle.init();
 bMulti.init();
 pie.init();
 
-},{"./lib/javascripts/Charts/Legend.js":6,"./lib/javascripts/Charts/LineChart.js":7,"./lib/javascripts/Charts/OverlayLayer.js":8,"./lib/javascripts/Charts/PieChart.js":9,"./lib/javascripts/Charts/StackBarChart.js":10,"./lib/javascripts/Charts/XAxis":11,"./lib/javascripts/Charts/YAxis":12,"d3":18}],2:[function(require,module,exports){
+},{"./lib/javascripts/Charts/Legend.js":6,"./lib/javascripts/Charts/LineChart.js":7,"./lib/javascripts/Charts/NullDataLayer.js":8,"./lib/javascripts/Charts/OverlayLayer.js":9,"./lib/javascripts/Charts/PieChart.js":10,"./lib/javascripts/Charts/StackBarChart.js":11,"./lib/javascripts/Charts/XAxis":12,"./lib/javascripts/Charts/YAxis":13,"d3":19}],2:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () {
@@ -265,7 +287,7 @@ var BarChart = function (_Chart) {
 
 module.exports = BarChart;
 
-},{"./Chart":4,"d3":18}],4:[function(require,module,exports){
+},{"./Chart":4,"d3":19}],4:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () {
@@ -522,7 +544,7 @@ var Chart = function () {
 
 module.exports = Chart;
 
-},{"../Helpers/defined":13,"d3":18}],5:[function(require,module,exports){
+},{"../Helpers/defined":14,"d3":19}],5:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -672,7 +694,7 @@ var Layer = function () {
 
 module.exports = Layer;
 
-},{"d3":18}],6:[function(require,module,exports){
+},{"d3":19}],6:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -797,7 +819,7 @@ var Legend = function () {
 
 module.exports = Legend;
 
-},{"../Helpers/defined":13,"../Helpers/formatData":14,"../Helpers/getDate":16,"d3":18,"lodash":19}],7:[function(require,module,exports){
+},{"../Helpers/defined":14,"../Helpers/formatData":15,"../Helpers/getDate":17,"d3":19,"lodash":20}],7:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -947,9 +969,6 @@ var LineChart = function (_Chart) {
     this.svg.selectAll('.line-group').each(function () {
       _d2.default.select(this).selectAll('.circle').classed({ 'is-hover': function isHover(d, i) {
           return i === j;
-        },
-        'is-null': function isNull(d) {
-          return !d.y;
         }
       });
     });
@@ -987,7 +1006,9 @@ var LineChart = function (_Chart) {
           return d.color;
         }).attr('r', function () {
           return 3;
-        }).attr('stroke-width', 0);
+        }).attr('stroke-width', 0).classed('is-null', function (d) {
+          return !d.y;
+        });
       });
     });
     this.render();
@@ -1013,7 +1034,88 @@ var LineChart = function (_Chart) {
 
 module.exports = LineChart;
 
-},{"./Chart":4,"d3":18}],8:[function(require,module,exports){
+},{"./Chart":4,"d3":19}],8:[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var _d = require('d3');
+
+var _d2 = _interopRequireDefault(_d);
+
+var _Layer2 = require('./Layer');
+
+var _Layer3 = _interopRequireDefault(_Layer2);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _defaults(obj, defaults) {
+  var keys = Object.getOwnPropertyNames(defaults);for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];var value = Object.getOwnPropertyDescriptor(defaults, key);if (value && value.configurable && obj[key] === undefined) {
+      Object.defineProperty(obj, key, value);
+    }
+  }return obj;
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass);
+}
+
+/**
+ * Class representing a layer indicating null data points.
+ * @extends Layer
+ */
+
+var NullDataLayer = function (_Layer) {
+  _inherits(NullDataLayer, _Layer);
+
+  function NullDataLayer(options) {
+    _classCallCheck(this, NullDataLayer);
+
+    var _this = _possibleConstructorReturn(this, _Layer.call(this, options));
+
+    _this.init();
+    return _this;
+  }
+
+  NullDataLayer.prototype.init = function init() {
+    var _this2 = this;
+
+    _Layer.prototype.init.call(this);
+    this.layer.selectAll('rect').attr('class', function (d, i) {
+      var dataY = _this2.chart.data.map(function (d) {
+        return d[i].y;
+      });
+      if (dataY.indexOf(null) > -1) {
+        return 'empty';
+      } else {
+        return '';
+      }
+    });
+  };
+
+  return NullDataLayer;
+}(_Layer3.default);
+
+module.exports = NullDataLayer;
+
+},{"./Layer":5,"d3":19}],9:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1137,7 +1239,7 @@ var OverlayLayer = function (_Layer) {
 
 module.exports = OverlayLayer;
 
-},{"../Helpers/defined":13,"./Layer":5,"d3":18}],9:[function(require,module,exports){
+},{"../Helpers/defined":14,"./Layer":5,"d3":19}],10:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1267,7 +1369,7 @@ var PieChart = function (_Chart) {
 
 module.exports = PieChart;
 
-},{"./Chart":4,"d3":18}],10:[function(require,module,exports){
+},{"./Chart":4,"d3":19}],11:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1462,7 +1564,7 @@ var StackBarChart = function (_BarChart) {
 
 module.exports = StackBarChart;
 
-},{"../Helpers/isActive":17,"./BarChart":3,"d3":18}],11:[function(require,module,exports){
+},{"../Helpers/isActive":18,"./BarChart":3,"d3":19}],12:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1578,7 +1680,7 @@ var XAxis = function (_Axis) {
 
 module.exports = XAxis;
 
-},{"../Helpers/getDate":16,"./Axis":2,"d3":18}],12:[function(require,module,exports){
+},{"../Helpers/getDate":17,"./Axis":2,"d3":19}],13:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1695,7 +1797,7 @@ var YAxis = function (_Axis) {
 
 module.exports = YAxis;
 
-},{"../Helpers/formatData":14,"./Axis":2,"d3":18}],13:[function(require,module,exports){
+},{"../Helpers/formatData":15,"./Axis":2,"d3":19}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1710,7 +1812,7 @@ var defined = function defined(value) {
 
 module.exports = defined;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -1766,7 +1868,7 @@ var formatData = function formatData(value, _prefix, _suffix, rounded, isMoney) 
 
 module.exports = formatData;
 
-},{"./formatSeconds":15,"d3":18,"defined":20}],15:[function(require,module,exports){
+},{"./formatSeconds":16,"d3":19,"defined":21}],16:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1801,7 +1903,7 @@ var formatSeconds = function formatSeconds(value) {
 
 module.exports = formatSeconds;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -1832,7 +1934,7 @@ var getDate = function getDate() {
 
 module.exports = getDate;
 
-},{"d3":18}],17:[function(require,module,exports){
+},{"d3":19}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1854,7 +1956,7 @@ function isActive(d, i, j) {
 }
 module.exports = isActive;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.17"
@@ -11409,7 +11511,7 @@ module.exports = isActive;
   });
   if (typeof define === "function" && define.amd) this.d3 = d3, define(d3); else if (typeof module === "object" && module.exports) module.exports = d3; else this.d3 = d3;
 }();
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -27818,7 +27920,7 @@ module.exports = isActive;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 
 module.exports = function () {

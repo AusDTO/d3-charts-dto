@@ -13,3 +13,17 @@
   font-size: 12px;
   fill: #333;
 }
+
+rect.empty{
+    fill: #ddd;
+}
+
+.ruler-wrapper.is-hover line{
+    fill: none;
+  stroke: #333;
+  stroke-width: 1px;
+}
+
+circle.is-null{
+    fill-opacity: 0!important;
+}

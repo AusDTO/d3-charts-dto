@@ -9,9 +9,6 @@
     <link rel="stylesheet" type="text/css" href="./public/assets/css/index.css">
 </head>
 <body>
-<div class="patterns">
-    <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <pattern id="diagonal-stripe-1" patternUnits="userSpaceOnUse" width="10" height="10"> <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScvPgogIDxwYXRoIGQ9J00tMSwxIGwyLC0yCiAgICAgICAgICAgTTAsMTAgbDEwLC0xMAogICAgICAgICAgIE05LDExIGwyLC0yJyBzdHJva2U9J2JsYWNrJyBzdHJva2Utd2lkdGg9JzEnLz4KPC9zdmc+Cg==" x="0" y="0" width="10" height="10"> </image> </pattern> </defs> </svg>
-</div>
 <header class="container">
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -21,7 +18,7 @@
   </div>
 </nav></header>
 <div class="container ">
-<h2>Bare Charts</h2>
+<h2>Charts</h2>
     <section class="row">
         <div class="col-sm-12"><h3> Single Line chart</h3></div>
         <div class="col-sm-4">
@@ -107,10 +104,29 @@ pie.init();
         <div class="col-sm-8"><div id="chart4" class="pie "></div></div>
 </section>
 
-<h2>Charts with Axis</h2>
+<h2>Charts with missing data</h2>
+    <section class="row">
+        <div class="col-sm-12"><h3> Single Line chart</h3></div>
+        <div class="col-sm-4">
+        <pre>
+let lSingle = new LineChart({
+    height: 200,
+    element: d3.select('#chart5'),
+    type: 'line',
+    data: data0
+});
+lSingle.init();
+let lSingleXAxis = new XAxis({chart: lSingle});
+let lSingleYAxis = new YAxis({chart: lSingle});
+let lSingleLegend = new Legend({chart: lSingle});
+let lSingleOverlay = new OverlayLayer({chart: lSingle, legend: lSingleLegend, above: true});
+let lSingleNullDataLayer = new NullDataLayer({chart: lSingle, legend: lSingleLegend, above: false});
 
+        </pre>
+        </div>
+        <div class="col-sm-8"><div id="chart5" class="single-line"></div></div>
+    </section>
 
-<h2>Charts with interactions</h2>
 
 
 </div>
