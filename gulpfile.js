@@ -58,7 +58,7 @@ gulp.task('build', ['dev', 'test', 'sass']);
 gulp.task('default', ['build']);
 
 gulp.task('doc', function (cb) {
-    gulp.src(['README.md', 'node_modules/d3-charts-dto/lib/javascripts/**/*.js'], {read: false})
+    gulp.src(['README.md', './lib/javascripts/**/*.js'], {read: false})
         .pipe(jsdoc(cb));
 });
 

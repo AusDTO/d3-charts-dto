@@ -40,7 +40,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html#buildOut">buildOut</a></li><li><a href="global.html#convertData">convertData</a></li><li><a href="global.html#cropData">cropData</a></li><li><a href="global.html#defined">defined</a></li><li><a href="global.html#formatData">formatData</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getToolTipText">getToolTipText</a></li><li><a href="global.html#hasNegativeValue">hasNegativeValue</a></li><li><a href="global.html#isActive">isActive</a></li><li><a href="global.html#normalise">normalise</a></li><li><a href="global.html#roundToFive">roundToFive</a></li>
+					<li><a href="global.html#buildOut">buildOut</a></li><li><a href="global.html#convertFromSeconds">convertFromSeconds</a></li><li><a href="global.html#defined">defined</a></li><li><a href="global.html#formatData">formatData</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#hasNegativeValue">hasNegativeValue</a></li><li><a href="global.html#isActive">isActive</a></li><li><a href="global.html#numberOfInstance">numberOfInstance</a></li><li><a href="global.html#roundToFive">roundToFive</a></li>
 				</ul>
 			</li>
 			
@@ -191,175 +191,15 @@
         <dl>
             
 <hr>
-<dt class="name" id="_yMax">
-    <h4><span class="type-signature"></span>_yMax<span class="type-signature"> :Number</span></h4>
-
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Custom max value(y axis), if not provided, it will be caculated based on data</p>
-    </div>
-    
-
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">Number</span>
-
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
-	<dd class="inherited-from">
-		<ul class="dummy">
-			<li>
-				<a href="Chart.html#_yMax">Chart#_yMax</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt class="name" id="_yMin">
-    <h4><span class="type-signature"></span>_yMin<span class="type-signature"> :Number</span></h4>
-
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Custom min value(y axis), if not provided, it will be caculated based on data</p>
-    </div>
-    
-
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">Number</span>
-
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
-	<dd class="inherited-from">
-		<ul class="dummy">
-			<li>
-				<a href="Chart.html#_yMin">Chart#_yMin</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-</dd>
-
-        
-            
-<hr>
 <dt class="name" id="data">
-    <h4><span class="type-signature"></span>data<span class="type-signature"> :Array</span></h4>
+    <h4><span class="type-signature"></span>data<span class="type-signature"> :array</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Data for the chart</p>
+        <p>Gets or sets data for the chart</p>
     </div>
     
 
@@ -368,7 +208,7 @@
         <ul>
             <li>
                 
-<span class="param-type">Array</span>
+<span class="param-type">array</span>
 
 
 
@@ -432,14 +272,14 @@
             
 <hr>
 <dt class="name" id="displayRoundedData">
-    <h4><span class="type-signature"></span>displayRoundedData<span class="type-signature"> :Boolean</span></h4>
+    <h4><span class="type-signature"></span>displayRoundedData<span class="type-signature"> :boolean</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Whether data displayed for this chart should be rounded, for example, if a tooltip is displayed</p>
+        <p>Gets or sets whether data displayed for this chart should be rounded, for example, if a tooltip is displayed</p>
     </div>
     
 
@@ -448,7 +288,7 @@
         <ul>
             <li>
                 
-<span class="param-type">Boolean</span>
+<span class="param-type">boolean</span>
 
 
 
@@ -512,14 +352,14 @@
             
 <hr>
 <dt class="name" id="element">
-    <h4><span class="type-signature"></span>element<span class="type-signature"> :Object</span></h4>
+    <h4><span class="type-signature"></span>element<span class="type-signature"> :object</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>The element to append the chart to</p>
+        <p>Gets or sets the element</p>
     </div>
     
 
@@ -528,7 +368,7 @@
         <ul>
             <li>
                 
-<span class="param-type">Object</span>
+<span class="param-type">object</span>
 
 
 
@@ -592,14 +432,14 @@
             
 <hr>
 <dt class="name" id="height">
-    <h4><span class="type-signature"></span>height<span class="type-signature"> :Number</span></h4>
+    <h4><span class="type-signature"></span>height<span class="type-signature"> :number</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Height of the chart, the height of the svg would be height of the chart + margin</p>
+        <p>Gets or sets the height of the chart,</p>
     </div>
     
 
@@ -608,7 +448,7 @@
         <ul>
             <li>
                 
-<span class="param-type">Number</span>
+<span class="param-type">number</span>
 
 
 
@@ -757,14 +597,14 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             
 <hr>
 <dt class="name" id="margin">
-    <h4><span class="type-signature"></span>margin<span class="type-signature"> :Object</span></h4>
+    <h4><span class="type-signature"></span>margin<span class="type-signature"> :object</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Margin of chart relative to its wrapping svg</p>
+        <p>Gets or sets the margin</p>
     </div>
     
 
@@ -773,7 +613,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
         <ul>
             <li>
                 
-<span class="param-type">Object</span>
+<span class="param-type">object</span>
 
 
 
@@ -837,14 +677,14 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             
 <hr>
 <dt class="name" id="padding">
-    <h4><span class="type-signature"></span>padding<span class="type-signature"> :Object</span></h4>
+    <h4><span class="type-signature"></span>padding<span class="type-signature"> :object</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>When calculating x and y axis range, some padding can be added to those ranges, horizontal padding do not apply to bar chart</p>
+        <p>Gets or sets padding for data</p>
     </div>
     
 
@@ -853,7 +693,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
         <ul>
             <li>
                 
-<span class="param-type">Object</span>
+<span class="param-type">object</span>
 
 
 
@@ -917,14 +757,14 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             
 <hr>
 <dt class="name" id="prefix">
-    <h4><span class="type-signature"></span>prefix<span class="type-signature"> :String</span></h4>
+    <h4><span class="type-signature"></span>prefix<span class="type-signature"> :string</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Prefix of the datasets</p>
+        <p>Gets or sets the prefix of the data values</p>
     </div>
     
 
@@ -933,7 +773,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
         <ul>
             <li>
                 
-<span class="param-type">String</span>
+<span class="param-type">string</span>
 
 
 
@@ -997,14 +837,14 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             
 <hr>
 <dt class="name" id="suffix">
-    <h4><span class="type-signature"></span>suffix<span class="type-signature"> :String</span></h4>
+    <h4><span class="type-signature"></span>suffix<span class="type-signature"> :string</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Suffix of the datasets</p>
+        <p>Gets or sets the suffix of the data values</p>
     </div>
     
 
@@ -1013,7 +853,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
         <ul>
             <li>
                 
-<span class="param-type">String</span>
+<span class="param-type">string</span>
 
 
 
@@ -1077,14 +917,14 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             
 <hr>
 <dt class="name" id="svg">
-    <h4><span class="type-signature"></span>svg<span class="type-signature"> :Object</span></h4>
+    <h4><span class="type-signature"></span>svg<span class="type-signature"> :object</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>The svg element</p>
+        <p>Gets or sets the svg for the chart</p>
     </div>
     
 
@@ -1093,7 +933,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
         <ul>
             <li>
                 
-<span class="param-type">Object</span>
+<span class="param-type">object</span>
 
 
 
@@ -1157,14 +997,14 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             
 <hr>
 <dt class="name" id="type">
-    <h4><span class="type-signature"></span>type<span class="type-signature"> :'String'</span></h4>
+    <h4><span class="type-signature"></span>type<span class="type-signature"> :string</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Type of chart, could be line, bar or pie</p>
+        <p>Gets or sets the type of chart, could be line, bar or pie</p>
     </div>
     
 
@@ -1173,7 +1013,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
         <ul>
             <li>
                 
-<span class="param-type">'String'</span>
+<span class="param-type">string</span>
 
 
 
@@ -1237,14 +1077,14 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             
 <hr>
 <dt class="name" id="units">
-    <h4><span class="type-signature"></span>units<span class="type-signature"> :String</span></h4>
+    <h4><span class="type-signature"></span>units<span class="type-signature"> :string</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Units of the datasets</p>
+        <p>Gets or sets the units for data values</p>
     </div>
     
 
@@ -1253,7 +1093,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
         <ul>
             <li>
                 
-<span class="param-type">String</span>
+<span class="param-type">string</span>
 
 
 
@@ -1324,7 +1164,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
 <dd>
     
     <div class="description">
-        <p>The width of the chart content</p>
+        <p>Gets or sets the width of the chart content</p>
     </div>
     
 
@@ -1386,14 +1226,14 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             
 <hr>
 <dt class="name" id="wrapper">
-    <h4><span class="type-signature"></span>wrapper<span class="type-signature"> :Object</span></h4>
+    <h4><span class="type-signature"></span>wrapper<span class="type-signature"> :object</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Wrapper for the svg</p>
+        <p>Gets or sets the wrapper of the chart</p>
     </div>
     
 
@@ -1402,7 +1242,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
         <ul>
             <li>
                 
-<span class="param-type">Object</span>
+<span class="param-type">object</span>
 
 
 
@@ -1567,7 +1407,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
     </dt>
     <dd>
         
-<span class="param-type">Number</span>
+<span class="param-type">number</span>
 
 
 
@@ -1679,7 +1519,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
     </dt>
     <dd>
         
-<span class="param-type">Number</span>
+<span class="param-type">number</span>
 
 
 
@@ -1779,7 +1619,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
     
             
 <div class="param-desc">
-    <p>[description]</p>
+    <p>computer data related properties</p>
 </div>
 
 
@@ -1895,7 +1735,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
     
             
 <div class="param-desc">
-    <p>[description]</p>
+    <p>computer render properties</p>
 </div>
 
 
@@ -2303,7 +2143,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">number</span>
 
 
 
@@ -2640,6 +2480,118 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
             
 <hr>
 <dt>
+    <h4 class="name" id="switchColorMode"><span class="type-signature"></span>switchColorMode()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Switch color mode</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="Chart.html#switchColorMode">Chart#switchColorMode</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Chart.html#switchColorMode">Chart#switchColorMode</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="transformForD3"><span class="type-signature"></span>transformForD3()</h4>
     
     
@@ -2734,7 +2686,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
     </dt>
     <dd>
         
-<span class="param-type">Array</span>
+<span class="param-type">array</span>
 
 
 
@@ -2795,7 +2747,7 @@ monotone - cubic interpolation that preserves monotonicity in y.</p>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on May 15th 2016, 8:09:33 pm
+		on June 21st 2016, 2:59:45 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
