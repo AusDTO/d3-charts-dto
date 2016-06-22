@@ -4,7 +4,7 @@ import LineChart from './lib/javascripts/Charts/LineChart.js';
 import StackBarChart from './lib/javascripts/Charts/StackBarChart.js';
 import PieChart from './lib/javascripts/Charts/PieChart.js';
 
-import NullDataLayer from './lib/javascripts/Charts/NullDataLayer.js';
+// import NullDataLayer from './lib/javascripts/Charts/NullDataLayer.js';
 import OverlayLayer from './lib/javascripts/Charts/OverlayLayer.js';
 import XAxis from './lib/javascripts/Charts/XAxis';
 import YAxis from './lib/javascripts/Charts/YAxis';
@@ -15,7 +15,7 @@ function createPoint(day, color){
           color:color,
           id:"data-0", 
           name: 'data 0',
-          x: new Date(`2015-12-${day}`),
+          x: new Date(new Date().getTime() + day * 10000),
           y: Math.random()*100
          }
 }
@@ -74,28 +74,6 @@ let lSingleXAxis = new XAxis({chart: lSingle});
 let lSingleYAxis = new YAxis({chart: lSingle});
 let lSingleLegend = new Legend({chart: lSingle});
 let lSingleoverlay = new OverlayLayer({chart: lSingle, legend: lSingleLegend, above: true});
-
-
-let dataMissing = [createDataset(30, '#c0392b'), createDataset(30, '#1abc9c')];
-dataMissing[0][4].y = null;
-dataMissing[0][5].y = null;
-dataMissing[0][6].y = null;
-
-console.log(dataMissing);
-
-let lSingleWithMissingData = new LineChart({
-    height: 200,
-    element: d3.select('#chart5'),
-    type: 'line',
-    data: dataMissing
-});
-lSingleWithMissingData.init();
-let lSingleWithMissingDataXAxis = new XAxis({chart: lSingleWithMissingData});
-let lSingleWithMissingDataYAxis = new YAxis({chart: lSingleWithMissingData});
-let lSingleWithMissingDataLegend = new Legend({chart: lSingleWithMissingData});
-let lSingleWithMissingDataOverlay = new OverlayLayer({chart: lSingleWithMissingData, legend: lSingleWithMissingDataLegend, above: true});
-let lSingleWithMissingDataNullDataLayer = new NullDataLayer({chart: lSingleWithMissingData, legend: lSingleWithMissingDataLegend, above: false});
-
 
 lMulti.init();
 bSingle.init();

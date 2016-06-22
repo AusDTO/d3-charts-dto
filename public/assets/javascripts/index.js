@@ -21,10 +21,6 @@ var _PieChart = require('./lib/javascripts/Charts/PieChart.js');
 
 var _PieChart2 = _interopRequireDefault(_PieChart);
 
-var _NullDataLayer = require('./lib/javascripts/Charts/NullDataLayer.js');
-
-var _NullDataLayer2 = _interopRequireDefault(_NullDataLayer);
-
 var _OverlayLayer = require('./lib/javascripts/Charts/OverlayLayer.js');
 
 var _OverlayLayer2 = _interopRequireDefault(_OverlayLayer);
@@ -47,10 +43,12 @@ function createPoint(day, color) {
         color: color,
         id: "data-0",
         name: 'data 0',
-        x: new Date('2015-12-' + day),
+        x: new Date(new Date().getTime() + day * 10000),
         y: Math.random() * 100
     };
 }
+
+// import NullDataLayer from './lib/javascripts/Charts/NullDataLayer.js';
 
 function createDataset(size, color) {
     var dataset = [];
@@ -105,32 +103,12 @@ var lSingleYAxis = new _YAxis2.default({ chart: lSingle });
 var lSingleLegend = new _Legend2.default({ chart: lSingle });
 var lSingleoverlay = new _OverlayLayer2.default({ chart: lSingle, legend: lSingleLegend, above: true });
 
-var dataMissing = [createDataset(30, '#c0392b'), createDataset(30, '#1abc9c')];
-dataMissing[0][4].y = null;
-dataMissing[0][5].y = null;
-dataMissing[0][6].y = null;
-
-console.log(dataMissing);
-
-var lSingleWithMissingData = new _LineChart2.default({
-    height: 200,
-    element: _d2.default.select('#chart5'),
-    type: 'line',
-    data: dataMissing
-});
-lSingleWithMissingData.init();
-var lSingleWithMissingDataXAxis = new _XAxis2.default({ chart: lSingleWithMissingData });
-var lSingleWithMissingDataYAxis = new _YAxis2.default({ chart: lSingleWithMissingData });
-var lSingleWithMissingDataLegend = new _Legend2.default({ chart: lSingleWithMissingData });
-var lSingleWithMissingDataOverlay = new _OverlayLayer2.default({ chart: lSingleWithMissingData, legend: lSingleWithMissingDataLegend, above: true });
-var lSingleWithMissingDataNullDataLayer = new _NullDataLayer2.default({ chart: lSingleWithMissingData, legend: lSingleWithMissingDataLegend, above: false });
-
 lMulti.init();
 bSingle.init();
 bMulti.init();
 pie.init();
 
-},{"./lib/javascripts/Charts/Legend.js":6,"./lib/javascripts/Charts/LineChart.js":7,"./lib/javascripts/Charts/NullDataLayer.js":8,"./lib/javascripts/Charts/OverlayLayer.js":9,"./lib/javascripts/Charts/PieChart.js":10,"./lib/javascripts/Charts/StackBarChart.js":11,"./lib/javascripts/Charts/XAxis":12,"./lib/javascripts/Charts/YAxis":13,"d3":19}],2:[function(require,module,exports){
+},{"./lib/javascripts/Charts/Legend.js":6,"./lib/javascripts/Charts/LineChart.js":7,"./lib/javascripts/Charts/OverlayLayer.js":8,"./lib/javascripts/Charts/PieChart.js":9,"./lib/javascripts/Charts/StackBarChart.js":10,"./lib/javascripts/Charts/XAxis":11,"./lib/javascripts/Charts/YAxis":12,"d3":18}],2:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () {
@@ -182,11 +160,17 @@ var Axis = function () {
   /**
    * Render function
    * @return {undefined}
+   * Apply the axis to a selection, the selection must contain an svg or g element
    */
 
   Axis.prototype.render = function render() {
     this.axis.call(this.Axis);
   };
+
+  /**
+   * Destroy the axis
+   * @return {undefined} remove the `g` element that holds the axis
+   */
 
   Axis.prototype.destroy = function destroy() {
     this.axis.remove();
@@ -195,7 +179,7 @@ var Axis = function () {
   _createClass(Axis, [{
     key: 'Axis',
     get: function get() {
-      return false;
+      throw new Error('axis must be implemented in derived classes');
     }
   }]);
 
@@ -287,7 +271,7 @@ var BarChart = function (_Chart) {
 
 module.exports = BarChart;
 
-},{"./Chart":4,"d3":19}],4:[function(require,module,exports){
+},{"./Chart":4,"d3":18}],4:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () {
@@ -318,6 +302,13 @@ function _classCallCheck(instance, Constructor) {
   }
 }
 
+/**
+ * @Chart
+ * In D3, If an event listener was already registered for the same type on the selected element, the existing listener is removed before the new listener is added.
+ * To register multiple listeners for the same event type, the type may be followed by an optional namespace, such as "click.foo" and "click.bar".
+ * count the instance of chart, use the instance to namespace the event listener for window resize to make the chart responsive
+ * @type {Number}
+ */
 var numberOfInstance = 0;
 
 /** Abstract Class representing a chart. */
@@ -325,80 +316,93 @@ var numberOfInstance = 0;
 var Chart = function () {
   /**
    * Chart base class constructor
-   * @param  {Object} options [description]
+   * @param  {object} options Object with the following properties:
+   * @param {number} [options.height] The height of the chart, the height of the svg would be height of the chart + margin, default = 300
+   * @param {object} options.element The element to append the chart to.
+   * @param {object} [options.margin] Margin of chart relative to its wrapping svg.
+   * @param {object} [options.padding] Padding of chart data. for example, if the max value of the data is 10, setting a paddig top will make the highest point of the chart bigger than 10.
+   * @param {string} [options.units] Units of the values in the dataset.
+   * @param {string} [options.prefix] Prefix of the values in the dataset.
+   * @param {string} [options.suffix] Suffix of the values in the dataset.
+   * @param {string} [options.units] Units of the datasets.
+   * @param {array} options.data Data for the chart.
+   * @param {string} [options.type] The type of chart to be created.
+   * @param {boolean} [options.displayRoundedData] Whether to round data value to integer when displaying vlaue in legend and tooltip
+   * @param {boolean} [options.isHighContrastMode] Whether to use alternative color/style
+   *
    */
 
   function Chart(options) {
     _classCallCheck(this, Chart);
 
     /**
-     * Height of the chart, the height of the svg would be height of the chart + margin
-     * @type {Number}
+     * Gets or sets the height of the chart,
+     * @type {number}
      */
     this.height = options.height || 300;
     /**
-     * The element to append the chart to
-     * @type {Object}
+     * Gets or sets the element
+     * @type {object}
      */
     this.element = options.element;
 
     /**
-     * Margin of chart relative to its wrapping svg
-     * @type {Object}
+     * Gets or sets the margin
+     * @type {object}
      */
     this.margin = options.margin || { top: 40, right: 40, bottom: 40, left: 40 };
 
     /**
-     * Units of the datasets
-     * @type {String}
+     * Gets or sets the units for data values
+     * @type {string}
      */
     this.units = options.units || '';
 
     /**
-     * Prefix of the datasets
-     * @type {String}
+     * Gets or sets the prefix of the data values
+     * @type {string}
      */
     this.prefix = options.prefix || '';
 
     /**
-     * Suffix of the datasets
-     * @type {String}
+     * Gets or sets the suffix of the data values
+     * @type {string}
      */
     this.suffix = options.suffix || '';
 
     /**
-     * Wrapper for the svg
-     * @type {Object}
+     * Gets or sets the wrapper of the chart
+     * @type {object}
      */
     this.wrapper = this.element.append('div').attr('class', 'chart');
 
     /**
-     * The svg element
-     * @type {Object}
+     * Gets or sets the svg for the chart
+     * @type {object}
      */
     this.svg = this.wrapper.append('svg').style('fill', '#ffffff');
 
     /**
-     * Data for the chart
-     * @type {Array}
+     * Gets or sets data for the chart
+     * @type {array}
      */
     this.data = options.data;
 
     /**
-     * Type of chart, could be line, bar or pie
-     * @type {'String'}
+     * Gets or sets the type of chart, could be line, bar or pie
+     * @type {string}
      */
     this.type = options.type || 'line';
 
     /**
-     * Whether data displayed for this chart should be rounded, for example, if a tooltip is displayed
-     * @type {Boolean}
+     * Gets or sets whether data displayed for this chart should be rounded, for example, if a tooltip is displayed
+     * @type {boolean}
      */
     this.displayRoundedData = options.displayRoundedData || false;
 
     /**
-     * When calculating x and y axis range, some padding can be added to those ranges, horizontal padding do not apply to bar chart
-     * @type {Object}
+     * Gets or sets padding for data
+     * @type {object}
      */
     this.padding = options.padding || { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -406,13 +410,13 @@ var Chart = function () {
   }
 
   /**
-   * The width of the chart content
-   * @return {Number} [description]
+   * Gets or sets the width of the chart content
+   * @return {number} [description]
    */
 
   /**
    * Compute and cache graphic properties
-   * @return {undefined} [description]
+   * @return {undefined} computer render properties
    */
 
   Chart.prototype.computeRenderProperty = function computeRenderProperty() {
@@ -422,7 +426,7 @@ var Chart = function () {
 
   /**
    * Compute and cache data properties
-   * @return {undefined} [description]
+   * @return {undefined} computer data related properties
    */
 
   Chart.prototype.computeDataProperty = function computeDataProperty() {
@@ -433,7 +437,7 @@ var Chart = function () {
 
   /**
    * Caculate min y values
-   * @return {Number}
+   * @return {number}
    */
 
   Chart.prototype.calculateYMin = function calculateYMin() {
@@ -442,7 +446,7 @@ var Chart = function () {
 
   /**
    * Caculate max y values
-   * @return {Number}
+   * @return {number}
    */
 
   Chart.prototype.calculateYMax = function calculateYMax() {
@@ -451,7 +455,7 @@ var Chart = function () {
 
   /**
    * get x scale
-   * @return {Function}
+   * @return {function}
    */
 
   Chart.prototype.getXScale = function getXScale() {
@@ -460,7 +464,7 @@ var Chart = function () {
 
   /**
    * get x scale
-   * @return {Function}
+   * @return {function}
    */
 
   Chart.prototype.getYScale = function getYScale() {
@@ -487,7 +491,7 @@ var Chart = function () {
 
   /**
    * Highlight datapoint
-   * @param  {Number} j index of the dataset that should be highlighted
+   * @param  {number} j index of the dataset that should be highlighted
    * @return {undefined}
    */
 
@@ -497,7 +501,7 @@ var Chart = function () {
 
   /**
    * Sometimes data needs to be transformed for certain layout(e.g: stack layout, pie layout)
-   * @return {Array} [description]
+   * @return {array} [description]
    */
 
   Chart.prototype.transformForD3 = function transformForD3() {
@@ -544,7 +548,7 @@ var Chart = function () {
 
 module.exports = Chart;
 
-},{"../Helpers/defined":14,"d3":19}],5:[function(require,module,exports){
+},{"../Helpers/defined":13,"d3":18}],5:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -569,6 +573,13 @@ var Layer = function () {
   function Layer(options) {
     _classCallCheck(this, Layer);
 
+    /**
+     * Layer class constructor
+     * @param  {object} options Object with the following properties:
+     * @param {object} [options.chart] The chart object to append this legend to
+     * @param {boolean} [options.above] Whether the layer sits on top of the chart or below the chart
+     *
+     */
     this.chart = options.chart;
     if (options.above === true) {
       this.layer = this.chart.svg.append('g').attr('class', 'layer--top');
@@ -608,9 +619,10 @@ var Layer = function () {
 
   /**
    * X position of this rect
-   * @param  {Object} d [description]
-   * @param  {Number} i [description]
-   * @return {Number}   [description]
+   * @private
+   * @param  {object} d The current datapoint to create layer rectangle for
+   * @param  {number} i The index of this data point in the data array
+   * @return {number}   The x cordinate for this data point
    */
 
   Layer.prototype._rectX = function _rectX(d, i) {
@@ -622,7 +634,7 @@ var Layer = function () {
     var nextX = this._getNextX(i);
     var prevX = this._getPrevX(i);
 
-    // if there this is a single data point position the eventRect at 0
+    // if this is a single data point position the eventRect at 0
     if (prevX === null && nextX === null) {
       return 0;
     }
@@ -636,8 +648,8 @@ var Layer = function () {
   /**
    * Previous data point relative to index i
    * @private
-   * @param  {Number} i [description]
-   * @return {Object}   [description]
+   * @param  {number} i The current index of the data point
+   * @return {object}   The previous x value, which is a date object
    */
 
   Layer.prototype._getPrevX = function _getPrevX(i) {
@@ -648,8 +660,8 @@ var Layer = function () {
   /**
    * Next data point relative to index i
    * @private
-   * @param  {Number} i [description]
-   * @return {Object}   [description]
+   * @param  {number} i The current index of the data point
+   * @return {object}   The next x value, which is a date object
    */
 
   Layer.prototype._getNextX = function _getNextX(i) {
@@ -659,7 +671,7 @@ var Layer = function () {
 
   /**
    * Init the layer
-   * @return {undefined} [description]
+   * @return {undefined} create a layer
    */
 
   Layer.prototype.init = function init() {
@@ -674,7 +686,7 @@ var Layer = function () {
 
   /**
    * render the layer
-   * @return {undefined} [description]
+   * @return {undefined} render the layer with correct width and height
    */
 
   Layer.prototype.render = function render() {
@@ -694,7 +706,7 @@ var Layer = function () {
 
 module.exports = Layer;
 
-},{"d3":19}],6:[function(require,module,exports){
+},{"d3":18}],6:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -732,6 +744,12 @@ var iconSize = 12;
 /** Class representing a legend. */
 
 var Legend = function () {
+  /**
+   * Legend class constructor
+   * @param  {object} options Object with the following properties:
+   * @param {object} [options.chart] The chart object to append this legend to
+   */
+
   function Legend(options) {
     _classCallCheck(this, Legend);
 
@@ -743,10 +761,20 @@ var Legend = function () {
     this.init();
   }
 
+  /**
+   * Initialise the legend
+   * @return {undefined}
+   */
+
   Legend.prototype.init = function init() {
     this.render();
     this.updateLegendIcon();
   };
+
+  /**
+   * render legend, create a div with tables to display legend and data
+   * @return {undefined}
+   */
 
   Legend.prototype.render = function render() {
     var _this = this;
@@ -780,12 +808,24 @@ var Legend = function () {
     }
   };
 
+  /**
+   * Get the name of the data
+   * @param  {number} d The current data point
+   * @return {undefined}
+   */
+
   Legend.prototype.getDataName = function getDataName(d) {
     if (this.type !== 'pie') {
       return '' + d[0].name;
     }
     return '' + d.data.name;
   };
+
+  /**
+   * Update the icon for the legend
+   * The reason this is a seperate function is the legends have different icons when in normal mode and high contrast mode
+   * @return {undefined}
+   */
 
   Legend.prototype.updateLegendIcon = function updateLegendIcon() {
     var that = this;
@@ -803,6 +843,12 @@ var Legend = function () {
     });
   };
 
+  /**
+   * When user hover on the chart, the  data displayed in the legend should be updated
+   * @param  {number} i the index of data being hovered
+   * @return {undefined}
+   */
+
   Legend.prototype.hover = function hover(i) {
     var _this2 = this;
 
@@ -819,7 +865,7 @@ var Legend = function () {
 
 module.exports = Legend;
 
-},{"../Helpers/defined":14,"../Helpers/formatData":15,"../Helpers/getDate":17,"d3":19,"lodash":20}],7:[function(require,module,exports){
+},{"../Helpers/defined":13,"../Helpers/formatData":14,"../Helpers/getDate":16,"d3":18,"lodash":19}],7:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1034,88 +1080,7 @@ var LineChart = function (_Chart) {
 
 module.exports = LineChart;
 
-},{"./Chart":4,"d3":19}],8:[function(require,module,exports){
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-var _d = require('d3');
-
-var _d2 = _interopRequireDefault(_d);
-
-var _Layer2 = require('./Layer');
-
-var _Layer3 = _interopRequireDefault(_Layer2);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _defaults(obj, defaults) {
-  var keys = Object.getOwnPropertyNames(defaults);for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];var value = Object.getOwnPropertyDescriptor(defaults, key);if (value && value.configurable && obj[key] === undefined) {
-      Object.defineProperty(obj, key, value);
-    }
-  }return obj;
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass);
-}
-
-/**
- * Class representing a layer indicating null data points.
- * @extends Layer
- */
-
-var NullDataLayer = function (_Layer) {
-  _inherits(NullDataLayer, _Layer);
-
-  function NullDataLayer(options) {
-    _classCallCheck(this, NullDataLayer);
-
-    var _this = _possibleConstructorReturn(this, _Layer.call(this, options));
-
-    _this.init();
-    return _this;
-  }
-
-  NullDataLayer.prototype.init = function init() {
-    var _this2 = this;
-
-    _Layer.prototype.init.call(this);
-    this.layer.selectAll('rect').attr('class', function (d, i) {
-      var dataY = _this2.chart.data.map(function (d) {
-        return d[i].y;
-      });
-      if (dataY.indexOf(null) > -1) {
-        return 'empty';
-      } else {
-        return '';
-      }
-    });
-  };
-
-  return NullDataLayer;
-}(_Layer3.default);
-
-module.exports = NullDataLayer;
-
-},{"./Layer":5,"d3":19}],9:[function(require,module,exports){
+},{"./Chart":4,"d3":18}],8:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1170,6 +1135,14 @@ function _inherits(subClass, superClass) {
 var OverlayLayer = function (_Layer) {
   _inherits(OverlayLayer, _Layer);
 
+  /**
+   * OverlayLayer class constructor
+   * @param  {object} options Object with the following properties:
+   * @param {object} [options.chart] The chart object to append this legend to
+   * @param {object} [options.legend] The legend object which will be updated when hover happens
+   * @param {function} [options.hoverCallback] The callback function
+  */
+
   function OverlayLayer(options) {
     _classCallCheck(this, OverlayLayer);
 
@@ -1181,9 +1154,17 @@ var OverlayLayer = function (_Layer) {
     return _this;
   }
 
+  /**
+   * initialise hover layer
+   * This function does the following things:
+   * 1. update legend and chart to show the latest data point as action
+   * 2. listen to touchmove event on mobile to update active data point for legend and chart
+   * 3. listen to mousemove event to update active data point for legend and chart
+   * @return {undefined}
+   */
+
   OverlayLayer.prototype.init = function init() {
     _Layer.prototype.init.call(this);
-
     var that = this;
     var lastIndex = this.chart.data[0].length - 1;
     this.hover(lastIndex);
@@ -1222,6 +1203,12 @@ var OverlayLayer = function (_Layer) {
     }).on('touchmove', handleTouchMove);
   };
 
+  /**
+   * hover function, activate data point being hovered , activate the data point for chart and legend, then run callback function
+   * @param  {number} i index of data point to be activated
+   * @return {undefined}
+   */
+
   OverlayLayer.prototype.hover = function hover(i) {
     if (!(0, _defined2.default)(this.chart)) {
       throw new Error('Chart is not defined.');
@@ -1239,7 +1226,7 @@ var OverlayLayer = function (_Layer) {
 
 module.exports = OverlayLayer;
 
-},{"../Helpers/defined":14,"./Layer":5,"d3":19}],10:[function(require,module,exports){
+},{"../Helpers/defined":13,"./Layer":5,"d3":18}],9:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1369,7 +1356,7 @@ var PieChart = function (_Chart) {
 
 module.exports = PieChart;
 
-},{"./Chart":4,"d3":19}],11:[function(require,module,exports){
+},{"./Chart":4,"d3":18}],10:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1564,7 +1551,7 @@ var StackBarChart = function (_BarChart) {
 
 module.exports = StackBarChart;
 
-},{"../Helpers/isActive":18,"./BarChart":3,"d3":19}],12:[function(require,module,exports){
+},{"../Helpers/isActive":17,"./BarChart":3,"d3":18}],11:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1671,7 +1658,7 @@ var XAxis = function (_Axis) {
     key: 'Axis',
     get: function get() {
       var sampleData = this.chart.data[0];
-      return _d2.default.svg.axis().scale(this.chart.xScale).orient('bottom').tickFormat((0, _getDate2.default)().short).tickValues([sampleData[0].x, sampleData[Math.floor(sampleData.length / 2)].x, sampleData[sampleData.length - 1].x]);
+      return _d2.default.svg.axis().scale(this.chart.xScale).orient('bottom').tickFormat((0, _getDate2.default)().long).tickValues([sampleData[0].x, sampleData[Math.floor(sampleData.length / 2)].x, sampleData[sampleData.length - 1].x]);
     }
   }]);
 
@@ -1680,7 +1667,7 @@ var XAxis = function (_Axis) {
 
 module.exports = XAxis;
 
-},{"../Helpers/getDate":17,"./Axis":2,"d3":19}],13:[function(require,module,exports){
+},{"../Helpers/getDate":16,"./Axis":2,"d3":18}],12:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1797,7 +1784,7 @@ var YAxis = function (_Axis) {
 
 module.exports = YAxis;
 
-},{"../Helpers/formatData":15,"./Axis":2,"d3":19}],14:[function(require,module,exports){
+},{"../Helpers/formatData":14,"./Axis":2,"d3":18}],13:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1812,7 +1799,7 @@ var defined = function defined(value) {
 
 module.exports = defined;
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -1868,7 +1855,7 @@ var formatData = function formatData(value, _prefix, _suffix, rounded, isMoney) 
 
 module.exports = formatData;
 
-},{"./formatSeconds":16,"d3":19,"defined":21}],16:[function(require,module,exports){
+},{"./formatSeconds":15,"d3":18,"defined":20}],15:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1903,7 +1890,7 @@ var formatSeconds = function formatSeconds(value) {
 
 module.exports = formatSeconds;
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -1934,7 +1921,7 @@ var getDate = function getDate() {
 
 module.exports = getDate;
 
-},{"d3":19}],18:[function(require,module,exports){
+},{"d3":18}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1956,7 +1943,7 @@ function isActive(d, i, j) {
 }
 module.exports = isActive;
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.17"
@@ -11511,7 +11498,7 @@ module.exports = isActive;
   });
   if (typeof define === "function" && define.amd) this.d3 = d3, define(d3); else if (typeof module === "object" && module.exports) module.exports = d3; else this.d3 = d3;
 }();
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -27920,7 +27907,7 @@ module.exports = isActive;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 
 module.exports = function () {
