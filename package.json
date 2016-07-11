@@ -7,6 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "dev": "gulp watch-dev",
     "test": "gulp test"
   },
   "repository": {
@@ -24,12 +25,19 @@
   },
   "homepage": "https://github.com/AusDTO/d3-chart#readme",
   "devDependencies": {
-    "d3": "^3.5.17",
-    "lodash": "^4.12.0",
     "babel-plugin-transform-es2015-classes": "^6.8.0",
     "babel-plugin-transform-proto-to-assign": "^6.8.0",
     "babel-preset-es2015": "^6.5.0",
-    "babelify": "^7.2.0"
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.1",
+    "exorcist": "^0.4.0",
+    "gulp": "^3.9.1",
+    "gulp-jsdoc3": "^0.3.0",
+    "gulp-notify": "^2.2.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "vinyl-transform": "^1.0.0",
+    "watchify": "^3.7.0"
   },
   "browserify": {
     "debug": true,
@@ -54,5 +62,7 @@
     ]
   },
   "dependencies": {
+    "d3": "^3.5.17",
+    "lodash": "^4.12.0"
   }
 }
