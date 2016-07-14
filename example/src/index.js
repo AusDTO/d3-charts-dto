@@ -1,3 +1,8 @@
-import StackedBarChart from './pages/stacked-bar-chart';
+import StackBarChart from './pages/stack-bar-chart';
+import LineChart from './pages/line-chart';
+import PieChart from './pages/pie-chart';
 
-window.StackedBarChart = StackedBarChart;
+
+window.StackBarChart = StackBarChart;
+window.LineChart = LineChart;
+window.PieChart = PieChart;
