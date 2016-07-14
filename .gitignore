@@ -1,3 +1,7 @@
+# project
+*.map
+*.*.map
+
 .DS_Store
 
 # Logs
@@ -10,4 +14,5 @@ node_modules/
 docs/
 doc/
 .idea/
+
 # build/
