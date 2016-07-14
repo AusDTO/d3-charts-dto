@@ -17,9 +17,9 @@ const autoprefixer = require('gulp-autoprefixer');
 const jsSource = {
     dev: {
         name: 'dev',
-        entry: './index.es6',
-        build: 'd3-charts-dto.js',
-        dest: './'
+        entry: './example/src',
+        build: 'example.js',
+        dest: './example/dist'
     },
     test: {
         name: 'test',
@@ -102,14 +102,22 @@ function build(env) {
     return bundle(env, browserify({
         entries: env.entry,
         debug: true,
-        extensions: ['.es6'],
-        paths: ['./node_modules', './lib/javascripts/']
-    }).transform(babelify, {presets: ['es2015'], plugins: [
-      "transform-proto-to-assign",
-      ["transform-es2015-classes", {
-        "loose": true
-      }]
-    ], sourceMaps: false}), true, false);
+        extensions: ['.es6', '.js'],
+        paths: [
+            './node_modules',
+            './lib/javascripts/',
+            './examples/src/'
+        ],
+    }).transform(babelify, {
+        presets: ['es2015'],
+        plugins: [
+            "transform-proto-to-assign",
+            ["transform-es2015-classes", {
+                "loose": true
+            }]
+        ],
+        sourceMaps: false
+    }), true, false);
 }
 
 function watch(env, minify) {
@@ -117,15 +125,23 @@ function watch(env, minify) {
         entries: env.entry,
         debug: true,
         cache: {},
-        extensions: ['.es6'],
+        extensions: ['.es6', '.js'],
         packageCache: {},
-        paths: ['./node_modules', './lib/javascripts/']
-    }).transform(babelify, {presets: ['es2015'], plugins: [
-      "transform-proto-to-assign",
-      ["transform-es2015-classes", {
-        "loose": true
-      }]
-    ], sourceMaps: false}), { poll: 1000 });
+        paths: [
+            './node_modules',
+            './lib/javascripts/',
+            './examples/src/'
+        ],
+    }).transform(babelify, {
+        presets: ['es2015'],
+        plugins: [
+            "transform-proto-to-assign",
+            ["transform-es2015-classes", {
+                "loose": true   // todo - this is bad
+            }]
+        ],
+        sourceMaps: true
+    }), { poll: 1000 });
 
     function rebundle(ids) {
         // Don't rebundle if only the version changed.
