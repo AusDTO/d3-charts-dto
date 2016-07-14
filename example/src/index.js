@@ -1,3 +1,3 @@
-import d3 from 'd3';
+import StackedBarChart from './pages/stacked-bar-chart';
 
-// ..
+window.StackedBarChart = StackedBarChart;

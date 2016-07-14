@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Example</title>
+	<title>Stack Bar Chart</title>
 	<script src="./dist/example.js"></script>
+	<script>
+		if (window.StackedBarChart) {
+			StackedBarChart.init();
+		}
+	</script>
 	<style>
 		.__stage {
 			max-width: 960px;
@@ -25,14 +30,8 @@
 	</ul>
 </nav>
 
-<div class="__stage">
-	<h1 class="h2" style="margin-bottom: 40px;">Stack Bar Charts</h1>
 
-	<article>
-		<header><h2 class="h3">basic</h2></header>
-		<main id="stack-basic"></main>
-	</article>
-</div>
+
 
 </body>
 </html>
