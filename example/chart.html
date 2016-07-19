@@ -2,13 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Stack Bar Chart</title>
+	<title>Example</title>
 	<script src="./dist/example.js"></script>
-	<script>
-		if (window.StackBarChart) {
-			StackBarChart.init();
-		}
-	</script>
 	<style>
 		.__stage {
 			max-width: 960px;
@@ -20,27 +15,36 @@
 		.__stage > article.contrast {
 			background: #eee;
 		}
+
+		svg {
+			border: 1px solid red;
+		}
 	</style>
 </head>
 <body>
 
 <nav>
 	<ul>
-		<li><a href="stack-bar-chart.html">Stack Bar Chart</a></li>
+		<li><a href="/chart.html">Chart</a></li>
+		<li><a href="/stacked-bar-chart.html">Stacked Bar Chart</a></li>
 	</ul>
 </nav>
 
 <div class="__stage">
-	<h1 class="h2" style="margin-bottom: 40px;">Stack Bar Charts</h1>
+	<h1 class="h2" style="margin-bottom: 40px;">Charts</h1>
 
 	<article>
 		<header><h2 class="h3">basic</h2></header>
-		<main id="stack-basic"></main>
+		<main id="chart-basic"></main>
 	</article>
-
-
 
 </div>
 
+
+<script>
+	if (window.ChartPage) {
+		window.ChartPage.init();
+	}
+</script>
 </body>
 </html>

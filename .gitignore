@@ -2,6 +2,7 @@
 example/dist/
 *.map
 *.*.map
+_trash
 
 .DS_Store
 
