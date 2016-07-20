@@ -7,9 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "serve": "serve ./example",
+    "serve": "serve --port 2000 ./example",
     "watch": "gulp watch-dev",
-    "dev": "npm run watch & npm run serve & open http://localhost:3000",
+    "dev": "npm run watch & npm run serve & open http://localhost:2000",
     "test": "gulp test"
   },
   "repository": {

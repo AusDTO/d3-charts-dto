@@ -4,6 +4,8 @@
 	<meta charset="UTF-8">
 	<title>Example</title>
 	<script src="./dist/example.js"></script>
+	<link rel="stylesheet" href="d3-charts-dto.css" />
+	<!--<link rel="stylesheet" href="https://dashboard.apps.staging.digital.gov.au/assets/css/index.css" />-->
 	<style>
 		.__stage {
 			max-width: 960px;
@@ -26,12 +28,22 @@
 <nav>
 	<ul>
 		<li><a href="/chart.html">Chart</a></li>
-		<li><a href="/stacked-bar-chart.html">Stacked Bar Chart</a></li>
+		<!--<li><a href="/stacked-bar-chart.html">Stacked Bar Chart</a></li>-->
 	</ul>
 </nav>
 
 <div class="__stage">
 	<h1 class="h2" style="margin-bottom: 40px;">Charts</h1>
+
+	<article>
+		<header><h2 class="h3">stacked bar</h2></header>
+		<main id="chart-stacked-bar"></main>
+	</article>
+
+	<article>
+		<header><h2 class="h3">basic bar</h2></header>
+		<main id="chart-basic-bar"></main>
+	</article>
 
 	<article>
 		<header><h2 class="h3">basic</h2></header>
