@@ -1,5 +1,5 @@
-import ChartPage from './pages/chart';
+import BarChartPage from './pages/bar';
 
 
-window.ChartPage = new ChartPage();
+window.BarChartPage = new BarChartPage();
 
