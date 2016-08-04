@@ -12,6 +12,7 @@ const watchify = require('watchify');
 const jsdoc = require('gulp-jsdoc3');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
+const eslintify = require('eslintify');
 
 
 const jsSource = {
@@ -23,7 +24,7 @@ const jsSource = {
     },
     test: {
         name: 'test',
-        entry: './spec/javascripts/indexSpec.es6',
+        entry: './spec/javascripts/indexSpec.js',
         build: 'indexSpec.js',
         dest: './spec/build'
     }
@@ -100,48 +101,30 @@ function bundle(env, bundler, minify, catchErrors) {
 
 function build(env) {
     return bundle(env, browserify({
-        entries: env.entry,
-        debug: true,
-        extensions: ['.es6', '.js'],
-        paths: [
-            './node_modules',
-            './lib/javascripts/',
-            './examples/src/'
-        ],
-    }).transform(babelify, {
-        presets: ['es2015'],
-        plugins: [
-            "transform-proto-to-assign",
-            ["transform-es2015-classes", {
-                "loose": true
-            }]
-        ],
-        sourceMaps: false
-    }), true, false);
+            entries: env.entry,
+            debug: true,
+            paths: ['./lib/javascripts/']
+        })
+        .transform({continuous: true}, eslintify)
+        .transform(babelify),
+        true,
+        false
+    );
 }
 
 function watch(env, minify) {
-    const bundler = watchify(browserify({
-        entries: env.entry,
-        debug: true,
-        cache: {},
-        extensions: ['.es6', '.js'],
-        packageCache: {},
-        paths: [
-            './node_modules',
-            './lib/javascripts/',
-            './examples/src/'
-        ],
-    }).transform(babelify, {
-        presets: ['es2015'],
-        plugins: [
-            "transform-proto-to-assign",
-            ["transform-es2015-classes", {
-                "loose": true   // todo - this is bad
-            }]
-        ],
-        sourceMaps: true
-    }), { poll: 1000 });
+    const bundler = watchify(
+        browserify({
+            entries: env.entry,
+            debug: true,
+            cache: {},
+            packageCache: {},
+            paths: ['./lib/javascripts/']
+        })
+        .transform({continuous: true}, eslintify)
+        .transform(babelify),
+        {poll: 1000}
+    );
 
     function rebundle(ids) {
         // Don't rebundle if only the version changed.
