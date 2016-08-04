@@ -1,4 +1,5 @@
 'use strict';
+
 const babelify = require('babelify');
 const browserify = require('browserify');
 const buffer = require('vinyl-buffer');
@@ -9,13 +10,16 @@ const source = require('vinyl-source-stream');
 const transform = require('vinyl-transform');
 const watchify = require('watchify');
 const jsdoc = require('gulp-jsdoc3');
+const sass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
+
 
 const jsSource = {
     dev: {
         name: 'dev',
         entry: './index.es6',
-        build: 'index.js',
-        dest: './public/assets/javascripts'
+        build: 'd3-charts-dto.js',
+        dest: './'
     },
     test: {
         name: 'test',
@@ -54,6 +58,20 @@ gulp.task('watch-test', function watchTest() {
 gulp.task('watch', ['watch-dev', 'watch-test']);
 
 gulp.task('build', ['dev', 'test', 'sass']);
+
+
+gulp.task('sass', function () {
+    return gulp.src('./lib/sass/d3-charts-dto.scss')
+        .pipe(sass({
+            precision: 8,
+            includePaths: [
+                './lib/sass/',
+                './node_modules'
+            ]
+        }).on('error', sass.logError))
+        .pipe(autoprefixer())
+        .pipe(gulp.dest('./'));
+});
 
 gulp.task('default', ['build']);
 
