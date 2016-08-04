@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Example</title>
+	<script src="./dist/example.js"></script>
+	<link rel="stylesheet" href="d3-charts-dto.css" />
+	<!--<link rel="stylesheet" href="https://dashboard.apps.staging.digital.gov.au/assets/css/index.css" />-->
+	<style>
+		.__stage {
+			max-width: 960px;
+			margin: 100px auto;
+		}
+		.__stage > article {
+			margin-bottom: 2em;
+		}
+		.__stage > article.contrast {
+			background: #eee;
+		}
+
+		svg {
+			border: 1px solid red;
+		}
+	</style>
+</head>
+<body>
+
+<nav>
+	<ul>
+		<li><a href="/bar.html">Bar</a></li>
+		<li><a href="/pie.html">Pie</a></li>
+		<li><a href="/line.html">Line</a></li>
+	</ul>
+</nav>
+
+<div class="__stage">
+	<h1 class="h2" style="margin-bottom: 40px;">Pie Charts</h1>
+
+	<article>
+		<header><h2 class="h3">basic pie</h2></header>
+		<main id="chart-basic-pie"></main>
+	</article>
+
+</div>
+
+
+<script>
+	if (window.PieChartPage) {
+		window.PieChartPage.init();
+	}
+</script>
+</body>
+</html>
