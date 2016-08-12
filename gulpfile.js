@@ -16,6 +16,12 @@ const eslintify = require('eslintify');
 
 
 const jsSource = {
+    build: {
+        name: 'dev',
+        entry: './lib/javascripts/index.js',
+        build: 'd3-charts-dto.js',
+        dest: './'
+    },
     dev: {
         name: 'dev',
         entry: './example/src',
@@ -38,6 +44,10 @@ function handleErrors() {
     }).apply(this, args);
     this.emit('end'); // Keep gulp from hanging on this task
 }
+
+gulp.task('export', function dev() {
+    return build(jsSource.build, false);
+});
 
 gulp.task('dev', function dev() {
     return build(jsSource.dev, false);

@@ -2,7 +2,7 @@
   "name": "d3-charts-dto",
   "version": "1.0.4",
   "description": "d3 chart",
-  "main": "index.js",
+  "main": "d3-charts-dto.js",
   "directories": {
     "doc": "docs"
   },
@@ -27,11 +27,15 @@
   },
   "homepage": "https://github.com/AusDTO/d3-chart#readme",
   "devDependencies": {
+    "babel-eslint": "^6.1.2",
     "babel-plugin-transform-es2015-classes": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-plugin-transform-proto-to-assign": "^6.8.0",
     "babel-preset-es2015": "^6.5.0",
+    "babel-preset-stage-2": "^6.13.0",
     "babelify": "^7.2.0",
     "browserify": "^13.0.1",
+    "eslintify": "^2.1.0",
     "exorcist": "^0.4.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
