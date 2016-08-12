@@ -1,116 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _d = require('d3');
-
-var _d2 = _interopRequireDefault(_d);
-
-var _Legend = require('./lib/javascripts/Charts/Legend.js');
-
-var _Legend2 = _interopRequireDefault(_Legend);
-
-var _LineChart = require('./lib/javascripts/Charts/LineChart.js');
-
-var _LineChart2 = _interopRequireDefault(_LineChart);
-
-var _StackBarChart = require('./lib/javascripts/Charts/StackBarChart.js');
-
-var _StackBarChart2 = _interopRequireDefault(_StackBarChart);
-
-var _PieChart = require('./lib/javascripts/Charts/PieChart.js');
-
-var _PieChart2 = _interopRequireDefault(_PieChart);
-
-var _OverlayLayer = require('./lib/javascripts/Charts/OverlayLayer.js');
-
-var _OverlayLayer2 = _interopRequireDefault(_OverlayLayer);
-
-var _XAxis = require('./lib/javascripts/Charts/XAxis');
-
-var _XAxis2 = _interopRequireDefault(_XAxis);
-
-var _YAxis = require('./lib/javascripts/Charts/YAxis');
-
-var _YAxis2 = _interopRequireDefault(_YAxis);
-
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function createPoint(day, color) {
-    return { altColor: _d2.default.rgb(color).darker(0.85),
-        altLineStyle: "12,5",
-        color: color,
-        id: "data-0",
-        name: 'data 0',
-        x: new Date('2015-12-' + day),
-        y: Math.random() * 100
-    };
-}
-
-// import NullDataLayer from './lib/javascripts/Charts/NullDataLayer.js';
-
-function createDataset(size, color) {
-    var dataset = [];
-    for (var i = 0; i < size; i++) {
-        dataset[i] = createPoint(i + 1, color);
-    }
-    return dataset;
-}
-
-var data0 = [createDataset(30, '#3498db')];
-var data1 = [createDataset(30, '#c0392b'), createDataset(30, '#1abc9c')];
-var dataPie = [createPoint(1, '#3498db'), createPoint(1, '#c0392b'), createPoint(1, '#1abc9c')];
-
-var lSingle = new _LineChart2.default({
-    height: 200,
-    element: _d2.default.select('#chart0'),
-    type: 'line',
-    data: data0
-});
-
-var lMulti = new _LineChart2.default({
-    height: 200,
-    element: _d2.default.select('#chart1'),
-    type: 'line',
-    data: data1
-});
-
-var bSingle = new _StackBarChart2.default({
-    height: 200,
-    element: _d2.default.select('#chart2'),
-    type: 'bar',
-    data: data0
-});
-
-var bMulti = new _StackBarChart2.default({
-    height: 200,
-    element: _d2.default.select('#chart3'),
-    type: 'bar',
-    data: data1
-});
-
-var pie = new _PieChart2.default({
-    height: 200,
-    element: _d2.default.select('#chart4'),
-    type: 'pie',
-    data: dataPie
-});
-
-lSingle.init();
-var lSingleXAxis = new _XAxis2.default({ chart: lSingle });
-var lSingleYAxis = new _YAxis2.default({ chart: lSingle });
-var lSingleLegend = new _Legend2.default({ chart: lSingle });
-var lSingleoverlay = new _OverlayLayer2.default({ chart: lSingle, legend: lSingleLegend, above: true });
-
-lMulti.init();
-bSingle.init();
-bMulti.init();
-pie.init();
-
-},{"./lib/javascripts/Charts/Legend.js":6,"./lib/javascripts/Charts/LineChart.js":7,"./lib/javascripts/Charts/OverlayLayer.js":8,"./lib/javascripts/Charts/PieChart.js":9,"./lib/javascripts/Charts/StackBarChart.js":10,"./lib/javascripts/Charts/XAxis":11,"./lib/javascripts/Charts/YAxis":12,"d3":18}],2:[function(require,module,exports){
-'use strict';
-
 var _createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
@@ -188,10 +78,14 @@ var Axis = function () {
 
 module.exports = Axis;
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _d = require('d3');
 
@@ -263,16 +157,23 @@ var BarChart = function (_Chart) {
         return _this2.isHighContrastMode ? d.altColor : d.color;
       });
     });
+
     this.render();
   };
 
   return BarChart;
 }(_Chart3.default);
 
+exports.default = BarChart;
+
 module.exports = BarChart;
 
-},{"./Chart":4,"d3":18}],4:[function(require,module,exports){
+},{"./Chart":3,"d3":18}],3:[function(require,module,exports){
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = function () {
   function defineProperties(target, props) {
@@ -524,11 +425,14 @@ var Chart = function () {
     this.svg.append('g').attr('class', 'chart__wrapper').attr('transform', 'translate(' + this.margin.left + ' , ' + this.margin.top + ')').datum(this.transformedData);
     numberOfInstance++;
     _d2.default.select(window).on('resize.' + 'chart' + numberOfInstance, this.render.bind(this));
+
+    return this;
   };
 
   /**
    * Destroy the chart
    * @return {undefined}
+   * todo - throttle this call
    */
 
   Chart.prototype.destroy = function destroy() {
@@ -546,9 +450,11 @@ var Chart = function () {
   return Chart;
 }();
 
+exports.default = Chart;
+
 module.exports = Chart;
 
-},{"../Helpers/defined":13,"d3":18}],5:[function(require,module,exports){
+},{"../Helpers/defined":12,"d3":18}],4:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -589,7 +495,7 @@ var Layer = function () {
   }
 
   /**
-   * Caculate the width of the layer rect
+   * Calculate the width of the layer rect
    * @private
    * @param  {Object} d - Data point
    * @param  {Number} i Index
@@ -706,8 +612,12 @@ var Layer = function () {
 
 module.exports = Layer;
 
-},{"d3":18}],6:[function(require,module,exports){
+},{"d3":18}],5:[function(require,module,exports){
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _d = require('d3');
 
@@ -863,16 +773,24 @@ var Legend = function () {
   return Legend;
 }();
 
+exports.default = Legend;
+
 module.exports = Legend;
 
-},{"../Helpers/defined":13,"../Helpers/formatData":14,"../Helpers/getDate":16,"d3":18,"lodash":20}],7:[function(require,module,exports){
+},{"../Helpers/defined":12,"../Helpers/formatData":13,"../Helpers/getDate":15,"d3":18,"lodash":20}],6:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _d = require('d3');
 
 var _d2 = _interopRequireDefault(_d);
+
+var _lodash = require('lodash');
 
 var _Chart2 = require('./Chart');
 
@@ -944,6 +862,22 @@ var LineChart = function (_Chart) {
     return _this;
   }
 
+  /**
+   * overrides super.transformForD3
+   * @returns {*}
+   */
+
+  LineChart.prototype.transformForD3 = function transformForD3() {
+    return this.data.map(function (d1) {
+      return d1.map(function (d2) {
+        if (!(0, _lodash.isDate)(d2.x)) {
+          d2.x = new Date(d2.x);
+        }
+        return d2;
+      });
+    });
+  };
+
   LineChart.prototype.calculateYMin = function calculateYMin() {
     var min = _d2.default.min(this.transformedData, function (c) {
       return _d2.default.min(c, function (v) {
@@ -964,9 +898,12 @@ var LineChart = function (_Chart) {
 
   LineChart.prototype.getXScale = function getXScale() {
     var sampleData = this.transformedData[0];
-    var paddingLeft = (sampleData[sampleData.length - 1].x.getTime() - sampleData[0].x.getTime()) * this.padding.left / this.width;
-    var paddingRight = (sampleData[sampleData.length - 1].x.getTime() - sampleData[0].x.getTime()) * this.padding.right / this.width;
-    return _d2.default.time.scale().range([0, this.width]).domain([sampleData[0].x.getTime() - paddingLeft, sampleData[sampleData.length - 1].x.getTime() + paddingRight]);
+    var head = sampleData[0].x.getTime();
+    var tail = sampleData[sampleData.length - 1].x.getTime();
+
+    var paddingLeft = (tail - head) * this.padding.left / this.width;
+    var paddingRight = (tail - head) * this.padding.right / this.width;
+    return _d2.default.time.scale().range([0, this.width]).domain([head - paddingLeft, tail + paddingRight]);
   };
 
   LineChart.prototype.getYScale = function getYScale() {
@@ -1079,9 +1016,11 @@ var LineChart = function (_Chart) {
   return LineChart;
 }(_Chart3.default);
 
+exports.default = LineChart;
+
 module.exports = LineChart;
 
-},{"./Chart":4,"d3":18}],8:[function(require,module,exports){
+},{"./Chart":3,"d3":18,"lodash":20}],7:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -1227,10 +1166,14 @@ var OverlayLayer = function (_Layer) {
 
 module.exports = OverlayLayer;
 
-},{"../Helpers/defined":13,"./Layer":5,"d3":18}],9:[function(require,module,exports){
+},{"../Helpers/defined":12,"./Layer":4,"d3":18}],8:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = function () {
   function defineProperties(target, props) {
@@ -1249,6 +1192,10 @@ var _d2 = _interopRequireDefault(_d);
 var _Chart2 = require('./Chart');
 
 var _Chart3 = _interopRequireDefault(_Chart2);
+
+var _isActive = require('../Helpers/isActive');
+
+var _isActive2 = _interopRequireDefault(_isActive);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -1271,12 +1218,12 @@ function _classCallCheck(instance, Constructor) {
 function _possibleConstructorReturn(self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
 }
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
   }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass);
 }
 
@@ -1337,10 +1284,12 @@ var PieChart = function (_Chart) {
   };
 
   PieChart.prototype.updateFill = function updateFill() {
-    var _this3 = this;
-
-    this.svg.selectAll('.arc').attr('fill', function (d) {
-      return _this3.isHighContrastMode === true ? d.data.altColor : d.data.color;
+    this.svg.selectAll('.arc').attr('fill', function (d, i) {
+      if (that.isHighContrastMode === true) {
+        return (0, _isActive2.default)(d, i, j) === true ? d.altColorDark : d.altColor;
+      } else {
+        return (0, _isActive2.default)(d, i, j) === true ? _d2.default.rgb(d.color).darker(0.8) : d.color;
+      }
     });
   };
 
@@ -1355,12 +1304,18 @@ var PieChart = function (_Chart) {
   return PieChart;
 }(_Chart3.default);
 
+exports.default = PieChart;
+
 module.exports = PieChart;
 
-},{"./Chart":4,"d3":18}],10:[function(require,module,exports){
+},{"../Helpers/isActive":16,"./Chart":3,"d3":18}],9:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _d = require('d3');
 
@@ -1511,7 +1466,7 @@ var StackBarChart = function (_BarChart) {
     this.svg.selectAll('.bar-group').each(function () {
       _d2.default.select(this).selectAll('.bar').attr('fill', function (d, i) {
         if (that.isHighContrastMode === true) {
-          return (0, _isActive2.default)(d, i, j) === true ? _d2.default.rgb(d.color).darker(0.85) : d.altColor;
+          return (0, _isActive2.default)(d, i, j) === true ? d.altColorDark || _d2.default.rgb(d.color).darker(0.85) : d.altColor;
         } else {
           return (0, _isActive2.default)(d, i, j) === true ? _d2.default.rgb(d.color).darker(0.8) : d.color;
         }
@@ -1550,12 +1505,18 @@ var StackBarChart = function (_BarChart) {
   return StackBarChart;
 }(_BarChart3.default);
 
+exports.default = StackBarChart;
+
 module.exports = StackBarChart;
 
-},{"../Helpers/isActive":17,"./BarChart":3,"d3":18}],11:[function(require,module,exports){
+},{"../Helpers/isActive":16,"./BarChart":2,"d3":18}],10:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = function () {
   function defineProperties(target, props) {
@@ -1600,14 +1561,31 @@ function _classCallCheck(instance, Constructor) {
 function _possibleConstructorReturn(self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
 }
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
   }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass);
 }
+
+/**
+ * Crudely get the best Tick values by sample size
+ * @param sample {Array} - the data sample
+ * @returns {Array} - ticks
+ */
+var getBestTickValues = function getBestTickValues() {
+  var sample = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+  var size = sample.length;
+  if ([1, 2, 3, 4].indexOf(size) >= 0) {
+    return sample.map(function (d) {
+      return d.x;
+    });
+  }
+  return [sample[0].x, sample[Math.floor(size / 2)].x, sample[size - 1].x];
+};
 
 var numberOfInstance = 0;
 
@@ -1659,19 +1637,27 @@ var XAxis = function (_Axis) {
     key: 'Axis',
     get: function get() {
       var sampleData = this.chart.data[0];
-      return _d2.default.svg.axis().scale(this.chart.xScale).orient('bottom').tickFormat((0, _getDate2.default)().long).tickValues([sampleData[0].x, sampleData[Math.floor(sampleData.length / 2)].x, sampleData[sampleData.length - 1].x]);
+      var size = sampleData.length;
+
+      return _d2.default.svg.axis().scale(this.chart.xScale).orient('bottom').tickFormat((0, _getDate2.default)().long).tickValues(getBestTickValues(sampleData));
     }
   }]);
 
   return XAxis;
 }(_Axis3.default);
 
+exports.default = XAxis;
+
 module.exports = XAxis;
 
-},{"../Helpers/getDate":16,"./Axis":2,"d3":18}],12:[function(require,module,exports){
+},{"../Helpers/getDate":15,"./Axis":1,"d3":18}],11:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = function () {
   function defineProperties(target, props) {
@@ -1716,12 +1702,12 @@ function _classCallCheck(instance, Constructor) {
 function _possibleConstructorReturn(self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
 }
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
   }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass);
 }
 
@@ -1775,7 +1761,7 @@ var YAxis = function (_Axis) {
       }
 
       return _d2.default.svg.axis().scale(this.chart.yScale).orient('right').tickFormat(function (d) {
-        return (0, _formatData2.default)(d, _this2.chart.prefix, _this2.chart.suffix);
+        return (0, _formatData2.default)(d, _this2.chart.prefix, _this2.chart.suffix, _this2.chart.displayRoundedData);
       }).tickValues(tickValues);
     }
   }]);
@@ -1783,9 +1769,11 @@ var YAxis = function (_Axis) {
   return YAxis;
 }(_Axis3.default);
 
+exports.default = YAxis;
+
 module.exports = YAxis;
 
-},{"../Helpers/formatData":14,"./Axis":2,"d3":18}],13:[function(require,module,exports){
+},{"../Helpers/formatData":13,"./Axis":1,"d3":18}],12:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1800,7 +1788,7 @@ var defined = function defined(value) {
 
 module.exports = defined;
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -1827,6 +1815,11 @@ function _interopRequireDefault(obj) {
  * @param  {Boolean} rounded [description]
  * @return {String}         [description]
  */
+
+var isFloat = function isFloat(n) {
+  return Number(n) === n && n % 1 !== 0;
+};
+
 var formatData = function formatData(value, _prefix, _suffix, rounded, isMoney) {
   var prefix = (0, _defined2.default)(_prefix) ? _prefix : '';
   var suffix = (0, _defined2.default)(_suffix) ? _suffix : '';
@@ -1836,27 +1829,39 @@ var formatData = function formatData(value, _prefix, _suffix, rounded, isMoney) 
   }
 
   if (suffix === 's') {
-    console.log('convert to h and min');
     return (0, _formatSeconds2.default)(value);
   }
 
   if (rounded) {
     return prefix + parseInt(value, 10) + suffix;
   }
+
   if (value === 0) {
     return prefix + 0 + suffix;
   }
-  // if there is prefix, then it's money
-  if ((value > 1 || value < -1) && !isMoney) {
-    return prefix + _d2.default.format('.2s')(value) + suffix;
-  } else {
+
+  if (isMoney) {
     return prefix + _d2.default.format('.2f')(value) + suffix;
   }
+
+  if (value > 1000) {
+    return prefix + _d2.default.format('.2s')(value) + suffix;
+  }
+
+  if (isFloat(value)) {
+    if (rounded === false) {
+      return prefix + _d2.default.format('.1f')(value) + suffix;
+    } else {
+      return prefix + _d2.default.format('f')(value) + suffix;
+    }
+  }
+
+  return prefix + value + suffix;
 };
 
 module.exports = formatData;
 
-},{"./formatSeconds":15,"d3":18,"defined":19}],15:[function(require,module,exports){
+},{"./formatSeconds":14,"d3":18,"defined":19}],14:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1891,7 +1896,7 @@ var formatSeconds = function formatSeconds(value) {
 
 module.exports = formatSeconds;
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 var _d = require('d3');
@@ -1922,7 +1927,7 @@ var getDate = function getDate() {
 
 module.exports = getDate;
 
-},{"d3":18}],17:[function(require,module,exports){
+},{"d3":18}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1944,7 +1949,117 @@ function isActive(d, i, j) {
 }
 module.exports = isActive;
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
+'use strict';
+
+var _d = require('d3');
+
+var _d2 = _interopRequireDefault(_d);
+
+var _Legend = require('./Charts/Legend.js');
+
+var _Legend2 = _interopRequireDefault(_Legend);
+
+var _LineChart = require('./Charts/LineChart.js');
+
+var _LineChart2 = _interopRequireDefault(_LineChart);
+
+var _StackBarChart = require('./Charts/StackBarChart.js');
+
+var _StackBarChart2 = _interopRequireDefault(_StackBarChart);
+
+var _PieChart = require('./Charts/PieChart.js');
+
+var _PieChart2 = _interopRequireDefault(_PieChart);
+
+var _OverlayLayer = require('./Charts/OverlayLayer.js');
+
+var _OverlayLayer2 = _interopRequireDefault(_OverlayLayer);
+
+var _XAxis = require('./Charts/XAxis');
+
+var _XAxis2 = _interopRequireDefault(_XAxis);
+
+var _YAxis = require('./Charts/YAxis');
+
+var _YAxis2 = _interopRequireDefault(_YAxis);
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function createPoint(day, color) {
+    return { altColor: _d2.default.rgb(color).darker(0.85),
+        altLineStyle: "12,5",
+        color: color,
+        id: "data-0",
+        name: 'data 0',
+        x: new Date('2015-12-' + day),
+        y: Math.random() * 100
+    };
+}
+
+// import NullDataLayer from './lib/javascripts/Charts/NullDataLayer.js';
+
+function createDataset(size, color) {
+    var dataset = [];
+    for (var i = 0; i < size; i++) {
+        dataset[i] = createPoint(i + 1, color);
+    }
+    return dataset;
+}
+
+var data0 = [createDataset(30, '#3498db')];
+var data1 = [createDataset(30, '#c0392b'), createDataset(30, '#1abc9c')];
+var dataPie = [createPoint(1, '#3498db'), createPoint(1, '#c0392b'), createPoint(1, '#1abc9c')];
+
+var lSingle = new _LineChart2.default({
+    height: 200,
+    element: _d2.default.select('#chart0'),
+    type: 'line',
+    data: data0
+});
+
+var lMulti = new _LineChart2.default({
+    height: 200,
+    element: _d2.default.select('#chart1'),
+    type: 'line',
+    data: data1
+});
+
+var bSingle = new _StackBarChart2.default({
+    height: 200,
+    element: _d2.default.select('#chart2'),
+    type: 'bar',
+    data: data0
+});
+
+var bMulti = new _StackBarChart2.default({
+    height: 200,
+    element: _d2.default.select('#chart3'),
+    type: 'bar',
+    data: data1
+});
+
+var pie = new _PieChart2.default({
+    height: 200,
+    element: _d2.default.select('#chart4'),
+    type: 'pie',
+    data: dataPie
+});
+
+lSingle.init();
+var lSingleXAxis = new _XAxis2.default({ chart: lSingle });
+var lSingleYAxis = new _YAxis2.default({ chart: lSingle });
+var lSingleLegend = new _Legend2.default({ chart: lSingle });
+var lSingleoverlay = new _OverlayLayer2.default({ chart: lSingle, legend: lSingleLegend, above: true });
+
+lMulti.init();
+bSingle.init();
+bMulti.init();
+pie.init();
+
+},{"./Charts/Legend.js":5,"./Charts/LineChart.js":6,"./Charts/OverlayLayer.js":7,"./Charts/PieChart.js":8,"./Charts/StackBarChart.js":9,"./Charts/XAxis":10,"./Charts/YAxis":11,"d3":18}],18:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.17"
@@ -27915,5 +28030,5 @@ module.exports = function () {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}]},{},[1])
+},{}]},{},[17])
 //# sourceMappingURL=d3-charts-dto.js.map
