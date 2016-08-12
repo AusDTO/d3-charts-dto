@@ -1821,17 +1821,11 @@ var isFloat = function isFloat(n) {
 };
 
 var formatData = function formatData(value, _prefix, _suffix, rounded, isMoney) {
-  var displayRoundedData = arguments.length <= 5 || arguments[5] === undefined ? null : arguments[5];
-
   var prefix = (0, _defined2.default)(_prefix) ? _prefix : '';
   var suffix = (0, _defined2.default)(_suffix) ? _suffix : '';
 
   if (value === null) {
     return 'no data';
-  }
-
-  if (displayRoundedData) {
-    return prefix + _d2.default.format('.1f')(value) + suffix;
   }
 
   if (suffix === 's') {
@@ -1855,7 +1849,11 @@ var formatData = function formatData(value, _prefix, _suffix, rounded, isMoney) 
   }
 
   if (isFloat(value)) {
-    return prefix + _d2.default.format('f')(value) + suffix;
+    if (rounded === false) {
+      return prefix + _d2.default.format('.1f')(value) + suffix;
+    } else {
+      return prefix + _d2.default.format('f')(value) + suffix;
+    }
   }
 
   return prefix + value + suffix;
