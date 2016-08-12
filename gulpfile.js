@@ -113,7 +113,6 @@ function build(env) {
     return bundle(env, browserify({
             entries: env.entry,
             debug: true,
-            paths: ['./lib/javascripts/']
         })
         .transform({continuous: true}, eslintify)
         .transform(babelify),
@@ -129,7 +128,6 @@ function watch(env, minify) {
             debug: true,
             cache: {},
             packageCache: {},
-            paths: ['./lib/javascripts/']
         })
         .transform({continuous: true}, eslintify)
         .transform(babelify),
